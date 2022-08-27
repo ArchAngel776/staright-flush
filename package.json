@@ -1,7 +1,7 @@
 {
   "name": "staright-flush",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple multiplayer 3D game based on Poker Texas Holdem.",
   "main": "./server/index.js",
   "scripts": {},
   "repository": {
