@@ -1,0 +1,17 @@
+{
+  "name": "staright-flush",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./server/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArchAngel776/staright-flush.git"
+  },
+  "author": "ArchAngel776",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArchAngel776/staright-flush/issues"
+  },
+  "homepage": "https://github.com/ArchAngel776/staright-flush#readme"
+}
