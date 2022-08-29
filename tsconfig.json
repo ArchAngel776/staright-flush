@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "outDir": "./build",
+        "rootDir": "./src",
+        "module": "ES2020",
+        "moduleResolution": "node",
+        "target": "ES2020",
+        "strict": true,
+        "alwaysStrict": true,
+        "noImplicitAny": true,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "noEmit": true
+    },
+    "include": [
+        "src/"
+    ],
+    "exclude": [
+        "client",
+        "node_modules"
+    ]
+}

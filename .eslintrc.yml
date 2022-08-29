@@ -1,0 +1,42 @@
+root: true
+env:
+  es2021: true
+extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+parser: '@typescript-eslint/parser'
+parserOptions:
+  project: 
+    - ./tsconfig.json
+plugins:
+  - '@typescript-eslint'
+rules:
+  linebreak-style:
+    - error
+    - windows
+  quotes:
+    - error
+    - double
+  no-duplicate-imports:
+    - error
+    - includeExports: true
+  eqeqeq: 
+    - error
+    - always
+  default-case:
+    - error
+  default-case-last:
+    - error
+  no-extra-bind:
+    - error
+  no-eval: 
+    - error
+  no-invalid-this:
+    - error
+  no-var:
+    - error
+ignorePatterns:
+  - client/**/*
+  - build/**/*
+  - tests/**/*
+  - jest.config.ts

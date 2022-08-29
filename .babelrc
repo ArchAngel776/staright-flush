@@ -1,0 +1,26 @@
+{
+    "assumptions": {
+        "setPublicClassFields": true
+    },
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "targets": {
+                    "node": "16.16.0"
+                },
+                "modules": "commonjs"
+            }
+        ],
+        "@babel/preset-typescript"
+    ],
+    "plugins": [
+        [
+            "@babel/plugin-proposal-decorators", 
+            { 
+                "legacy": true 
+            }
+        ],
+        "@babel/plugin-proposal-class-properties"
+    ]
+}

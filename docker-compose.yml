@@ -1,0 +1,21 @@
+version: "3.9"
+
+networks:
+  net-app:
+    name: straight-flush-net-app
+
+services:
+  app:
+    container_name: straight-flush-server
+    image: node:16.16.0
+    restart: always
+    ports:
+      - "8080:3000"
+    volumes:
+      - ./:/app
+    environment:
+      PORT: 3000
+    working_dir: /app
+    command: node build/index.js
+    networks:
+      - net-app
