@@ -1,0 +1,6 @@
+client/**/*
+build/**/*
+tests/**/*
+jest.config.js
+jest.config.ts
+straight-flush.js

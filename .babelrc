@@ -1,15 +1,18 @@
 {
     "assumptions": {
-        "setPublicClassFields": true
+        "setPublicClassFields": false,
+        "constantSuper": false,
+        "noClassCalls": true,
+        "setClassMethods": false,
+        "superIsCallableConstructor": true
     },
     "presets": [
         [
             "@babel/preset-env",
             {
                 "targets": {
-                    "node": "16.16.0"
-                },
-                "modules": "commonjs"
+                    "node": "current"
+                }
             }
         ],
         "@babel/preset-typescript"
@@ -21,6 +24,7 @@
                 "legacy": true 
             }
         ],
-        "@babel/plugin-proposal-class-properties"
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-transform-classes"
     ]
 }

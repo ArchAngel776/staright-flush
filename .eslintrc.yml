@@ -20,6 +20,8 @@ rules:
   no-duplicate-imports:
     - error
     - includeExports: true
+  no-constructor-return:
+    - error
   eqeqeq: 
     - error
     - always
@@ -35,8 +37,3 @@ rules:
     - error
   no-var:
     - error
-ignorePatterns:
-  - client/**/*
-  - build/**/*
-  - tests/**/*
-  - jest.config.ts
