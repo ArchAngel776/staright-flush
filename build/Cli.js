@@ -7,6 +7,10 @@ exports.default = void 0;
 
 var _index = _interopRequireDefault(require("./commands/index"));
 
+var _Console = require("./core/data/enums/Console");
+
+var _print = _interopRequireDefault(require("./core/hooks/print"));
+
 var _UnknownCommandException = _interopRequireDefault(require("./exceptions/UnknownCommandException"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -38,14 +42,24 @@ let Cli = /*#__PURE__*/function () {
     }
   }, {
     key: "run",
-    value: function run() {
+    value: async function run() {
       const Command = this.getCommand();
       const command = new Command(...this.arguments);
       command.init();
 
-      if (command.check()) {
-        command.except(command.execute());
+      if (!command.check()) {
+        return;
       }
+
+      try {
+        command.except(await command.execute());
+      } catch (exception) {
+        if (exception instanceof Error) {
+          (0, _print.default)(`${exception.name}: ${exception.message}`, _Console.Console.RED);
+        }
+      }
+
+      (0, _print.default)();
     }
   }]);
 

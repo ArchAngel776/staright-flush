@@ -1,5 +1,7 @@
 import Commands from "./commands/index"
+import { Console } from "./core/data/enums/Console"
 import { CommandConstructor } from "./core/data/types/CommandContructor"
+import print from "./core/hooks/print"
 import UnknownCommandException from "./exceptions/UnknownCommandException"
 
 export default class Cli
@@ -22,14 +24,24 @@ export default class Cli
         throw new UnknownCommandException(this.command)
     }
 
-    public run(): void
+    public async run(): Promise<void>
     {
         const Command = this.getCommand()
         const command = new Command(...this.arguments)
 
         command.init()
-        if (command.check()) {
-            command.except(command.execute())
+        if (!command.check()) {
+            return
         }
+
+        try {
+            command.except(await command.execute())
+        }
+        catch (exception) {
+            if (exception instanceof Error) {
+                print(`${exception.name}: ${exception.message}`, Console.RED)
+            }
+        }
+        print()
     }
 }

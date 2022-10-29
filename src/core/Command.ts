@@ -1,5 +1,6 @@
 import CommandErrorException from "../exceptions/CommandErrorException"
 import UnknownCommandStatusException from "../exceptions/UnknownCommandStatusException"
+import { AsyncAwait } from "./data/types/AsyncAwait"
 
 export default abstract class Command
 {
@@ -16,7 +17,7 @@ export default abstract class Command
         return true
     }
 
-    public abstract execute(): number
+    public abstract execute(): AsyncAwait<number>
 
     public except(status: number): void
     {

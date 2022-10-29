@@ -1,0 +1,1 @@
+export type CodePart = string | Array<CodePart>

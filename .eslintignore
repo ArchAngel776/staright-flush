@@ -1,5 +1,7 @@
-client/**/*
 build/**/*
+docker/**/*
+client/**/*
+migrations/**/*
 tests/**/*
 jest.config.js
 jest.config.ts
