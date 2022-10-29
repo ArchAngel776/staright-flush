@@ -1,8 +1,8 @@
 version: "3.9"
 
 networks:
-  net-app:
-    name: straight-flush-net-app
+  net-straight-flush:
+    name: straight-flush-net
 
 services:
   app:
@@ -10,12 +10,102 @@ services:
     image: node:16.16.0
     restart: always
     ports:
-      - "8080:3000"
+      - "80:3000"
     volumes:
       - ./:/app
     environment:
+      NODE_ENV: dev
       PORT: 3000
+      DB_HOST: s1.database.straight-flush.pl
+      DB_PORT: 27017
+      DB_USER: straight-flush
+      DB_PASS: password
+      DB_NAME: straight-flush
     working_dir: /app
     command: node build/index.js
+    depends_on:
+      - db-primary
     networks:
-      - net-app
+      net-straight-flush:
+        aliases:
+          - www.straight-flush.pl
+
+  db-primary:
+    container_name: straight-flush-database-primary
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.mongo
+    restart: always
+    environment:
+      MONGO_ADMIN_NAME: admin
+      MONGO_ADMIN_PASS: password
+      MONGO_APP_USER_NAME: straight-flush
+      MONGO_APP_USER_PASSWORD: password
+      MONGO_INITDB_DATABASE: straight-flush
+    volumes:
+      - dp:/data/db
+      - ./docker/mongo/conf/primary.conf:/etc/mongod.conf
+      - ./docker/mongo/scripts:/scripts
+      - ./docker/mongo/init.js:/docker-entrypoint-initdb.d/init.js
+    depends_on:
+      - db-secondary
+      - db-arbiter
+    networks:
+      net-straight-flush:
+        aliases:
+          - s1.database.straight-flush.pl
+
+  db-secondary:
+    container_name: straight-flush-database-secondary
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.mongo
+    restart: always
+    volumes:
+      - ds:/data/db
+      - ./docker/mongo/conf/secondary.conf:/etc/mongod.conf
+    networks:
+      net-straight-flush:
+        aliases:
+          - s2.database.straight-flush.pl
+
+  db-arbiter:
+    container_name: straight-flush-database-arbiter
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.mongo
+    restart: always
+    volumes:
+      - ./docker/mongo/conf/arbiter.conf:/etc/mongod.conf
+    networks:
+      net-straight-flush:
+        aliases:
+          - sa.database.straight-flush.pl
+
+  db-admin:
+    container_name: straight-flush-admin
+    image: mongo-express
+    restart: always
+    ports:
+      - "8080:8081"
+    environment:
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
+      ME_CONFIG_MONGODB_SERVER: s1.database.straight-flush.pl
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_AUTH_USERNAME: straight-flush
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: password
+      ME_CONFIG_MONGODB_AUTH_DATABASE: straight-flush
+    volumes:
+      - ./docker/mongo-admin.sh:/docker-entrypoint.sh
+    depends_on:
+      - db-primary
+      - db-secondary
+      - db-arbiter
+    networks:
+      - net-straight-flush
+
+volumes:
+  dp:
+    name: straight-flush-data-primary
+  ds:
+    name: straight-flush-data-secondary

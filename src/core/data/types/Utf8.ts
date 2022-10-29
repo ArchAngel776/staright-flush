@@ -1,0 +1,1 @@
+export type Utf8 = "utf-8"

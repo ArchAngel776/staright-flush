@@ -1,0 +1,8 @@
+FROM mongo:latest
+
+COPY mongo/keyfile.key /etc/mongo/keyfile.key
+
+RUN chmod 400 /etc/mongo/keyfile.key
+RUN chown 999:999 /etc/mongo/keyfile.key
+
+CMD ["--config", "/etc/mongod.conf"]
