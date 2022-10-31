@@ -1,5 +1,5 @@
 {
-  "name": "staright-flush",
+  "name": "straight-flush",
   "version": "1.0.0",
   "description": "Simple multiplayer 3D game based on Poker Texas Holdem.",
   "main": "./server/index.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArchAngel776/staright-flush.git"
+    "url": "git+https://github.com/ArchAngel776/straight-flush.git"
   },
   "author": "ArchAngel776",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ArchAngel776/staright-flush/issues"
+    "url": "https://github.com/ArchAngel776/straight-flush/issues"
   },
-  "homepage": "https://github.com/ArchAngel776/staright-flush#readme",
+  "homepage": "https://github.com/ArchAngel776/straight-flush#readme",
   "devDependencies": {
     "@babel/cli": "^7.18.10",
     "@babel/core": "^7.18.13",
