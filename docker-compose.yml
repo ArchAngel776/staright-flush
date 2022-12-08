@@ -1,8 +1,10 @@
 version: "3.9"
 
+
 networks:
   net-straight-flush:
     name: straight-flush-net
+
 
 services:
   app:
@@ -95,14 +97,14 @@ services:
       ME_CONFIG_MONGODB_AUTH_USERNAME: straight-flush
       ME_CONFIG_MONGODB_AUTH_PASSWORD: password
       ME_CONFIG_MONGODB_AUTH_DATABASE: straight-flush
-    volumes:
-      - ./docker/mongo-admin.sh:/docker-entrypoint.sh
+    command: node --unhandled-rejections=strict app
     depends_on:
       - db-primary
       - db-secondary
       - db-arbiter
     networks:
       - net-straight-flush
+
 
 volumes:
   dp:

@@ -1,8 +1,11 @@
-import Env from "../../Env"
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import Env from "../../../Env"
 import { MongoClient} from "mongodb"
-import MongoURL from "../helpers/MongoUrl"
-import DatabaseOperation from "../data/callbacks/DatabaseOperation"
+import MongoURL from "../../helpers/MongoUrl"
+import DatabaseOperation from "../../data/callbacks/DatabaseOperation"
 import Transaction from "./Transaction"
+import Method from "../../helpers/Method"
+import TransactionInitiate from "../../decorators/TransactionInitiate"
 
 export default class Connection
 {
@@ -12,7 +15,7 @@ export default class Connection
 
     protected database: string
 
-    public constructor(host: string, port: number, database: string, user?: string, password?: string)
+    protected constructor(host: string, port: number, database: string, user?: string, password?: string)
     {
         this.mongoURL = new MongoURL(host, port, database, user, password)
         this.database = database
@@ -56,17 +59,22 @@ export default class Connection
     public async make<Type>(operation: DatabaseOperation<Type>): Promise<Type>
     {
         const client = await this.getClient()
-        const result = await operation(client.db(this.database))
-        client.close()
-        return result
+        return operation(client.db(this.database))
+            .then(result => {
+                client.close()
+                return result
+            })
+            .catch(error => {
+                client.close()
+                throw error
+            })
     }
 
+    @Method(TransactionInitiate)
     public async beginTransaction(): Promise<Transaction>
     {
         const client = await this.getClient()
-        const transaction = new Transaction(client, this.database)
-        transaction.init()
-        return transaction
+        return new Transaction(client, this.database)
     }
 
     public static getConnection(): Connection

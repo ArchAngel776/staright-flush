@@ -1,11 +1,11 @@
 import { ClientSession, Db } from "mongodb"
-import Connection from "./Connection"
+import Connection from "./database/Connection"
 import DatabaseSessionOperation from "../data/callbacks/DatabaseSessionOperation"
 import { MigrationConstructor } from "../data/types/MigrationConstructor"
 
 export default class MigrationManager
 {
-    protected connection: Connection
+    protected readonly connection: Connection
 
     public constructor()
     {

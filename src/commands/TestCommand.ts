@@ -1,5 +1,6 @@
 import Command from "../core/Command"
-import isDefined from "../core/hooks/isDefined"
+import defined from "../core/hooks/defined"
+import print from "../core/hooks/print"
 import TestThrowException from "../exceptions/TestThrowException"
 
 export default class TestCommand extends Command
@@ -16,7 +17,7 @@ export default class TestCommand extends Command
 
     public init(): void 
     {
-        if (!isDefined(this.testString)) {
+        if (!defined(this.testString)) {
             this.testString = "foo"
         }
     }
@@ -32,7 +33,7 @@ export default class TestCommand extends Command
             return TestCommand.THROW
         }
 
-        console.log(`Command with param: ${this.testString}`)
+        print(`Command with param: ${this.testString}`)
         return TestCommand.SUCCESS
     }
 

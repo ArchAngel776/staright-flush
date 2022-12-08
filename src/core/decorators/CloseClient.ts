@@ -1,15 +1,15 @@
-import Bin from "../data/interfaces/Bin"
 import WithMongoClient from "../data/interfaces/WithMongoClient"
-import { AsyncAwait } from "../data/types/AsyncAwait"
-import { Safe } from "../data/types/Safe"
+import MethodModel from "../foundations/MethodModel"
 
-export default function CloseClient(target: WithMongoClient, property: string, descriptor: PropertyDescriptor)
+export default class CloseClient extends MethodModel<WithMongoClient, Promise<void>>
 {
-    const method: Bin<AsyncAwait<Safe>> = descriptor.value
-    descriptor.value = async function (this: WithMongoClient, ...args: Array<Safe>): Promise<Safe>
+    public method(): Promise<void>
     {
-        const result = await method.call(this, ...args)
-        await this.client.close()
-        return result
+        return (this.original())
+            .then(() => this.target.client.close())
+            .catch(error => {
+                this.target.client.close()
+                throw error
+            })
     }
 }

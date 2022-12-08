@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ClientSession, Db, MongoClient, ReadPreference, TransactionOptions } from "mongodb"
-import DatabaseSessionOperation from "../data/callbacks/DatabaseSessionOperation"
-import WithMongoClient from "../data/interfaces/WithMongoClient"
-import CloseClient from "../decorators/CloseClient"
+import DatabaseSessionOperation from "../../data/callbacks/DatabaseSessionOperation"
+import WithMongoClient from "../../data/interfaces/WithMongoClient"
+import CloseClient from "../../decorators/CloseClient"
+import Method from "../../helpers/Method"
 
 export default class Transaction implements WithMongoClient
 {
@@ -35,19 +36,19 @@ export default class Transaction implements WithMongoClient
         return operation(this.database, this.session)
     }
 
-    @CloseClient
+    @Method(CloseClient)
     public async commit(): Promise<void>
     {
         try {
             await this.session.commitTransaction()
         }
         catch (error) {
-            await this.session.abortTransaction()
+            await this.rollback()
             throw error
         }
     }
 
-    @CloseClient
+    @Method(CloseClient)
     public async rollback(): Promise<void>
     {
         await this.session.abortTransaction()

@@ -1,0 +1,1 @@
+export type Multi<Type> = Type | Array<Type>

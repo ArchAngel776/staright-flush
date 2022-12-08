@@ -26,7 +26,7 @@ module.exports = class Migration_02_10_2022_002307_users extends Migration
 				},
 				email: {
 					bsonType: "string",
-					pattern: "^[a-zA-Z0-9\\.\\!\\#\\$\\%\\&\\'\\*\\+\\/\\=\\?\\^\\_\\`\\{\\|\\}\\~\\-]+@[a-zA-Z0-9\\-]+(?:\.[a-zA-Z0-9\\-]+)*$",
+					//pattern: "^[a-zA-Z0-9\\.\\!\\#\\$\\%\\&\\'\\*\\+\\/\\=\\?\\^\\_\\`\\{\\|\\}\\~\\-]+@[a-zA-Z0-9\\-]+(?:\.[a-zA-Z0-9\\-]+)*$",
 					description: "Email field must be valid email address"
 				},
 				password_hash: {
@@ -63,9 +63,6 @@ module.exports = class Migration_02_10_2022_002307_users extends Migration
 		if (!await this.hasCollection("users")) {
 			return false
 		}
-
-		await this.dropIndex("username", "users")
-		await this.dropIndex("email", "users")
 
 		await this.dropCollection("users")
 
