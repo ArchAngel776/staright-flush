@@ -4,6 +4,7 @@ import MigrationExecutor from "../core/foundations/MigrationExecutor"
 import MigrationRevertingException from "../exceptions/MigrationRevertingError"
 import print from "../core/hooks/print"
 import { Console } from "../core/data/enums/Console"
+import Method from "../core/helpers/Method"
 
 export default class MigrationDown extends MigrationExecutor
 {
@@ -12,7 +13,7 @@ export default class MigrationDown extends MigrationExecutor
      */
     public static MIGRATION_REVERTING_ERROR = -2
 
-    @MigrationFilesPrint("Below files will be reverted:")
+    @Method(MigrationFilesPrint, "Below files will be reverted:")
     public async execute(): Promise<number>
     {
         for (const migration of this.migrations) {
@@ -23,7 +24,7 @@ export default class MigrationDown extends MigrationExecutor
                 return MigrationDown.MIGRATION_REVERTING_ERROR
             }
             
-            print(`Successful aplied migration: ${migration}`, Console.GREEN)
+            print(`Successful reverted migration: ${migration}`, Console.GREEN)
         }
 
         return MigrationDown.SUCCESS

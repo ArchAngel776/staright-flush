@@ -33,9 +33,7 @@ export default abstract class Migration
 
     public dropCollection(name: string): Promise<boolean>
     {
-        return this.database.dropCollection(name, {
-            session: this.session
-        })
+        return this.database.dropCollection(name)
     }
 
     public hasIndex(name: string, collection: string): Promise<boolean>
@@ -59,9 +57,7 @@ export default abstract class Migration
 
     public dropIndex(name: string, collection: string): Promise<Document>
     {
-        return this.database.collection(collection).dropIndex(name, {
-            session: this.session
-        })
+        return this.database.collection(collection).dropIndex(name)
     }
 
     public abstract apply(): Promise<boolean>

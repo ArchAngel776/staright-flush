@@ -1,3 +1,4 @@
 import Command from "../../Command"
+import { Constructor } from "./Constructor"
 
-export type CommandConstructor = new (...args: Array<string>) => Command
+export type CommandConstructor = Constructor<Command, string>

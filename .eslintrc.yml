@@ -37,3 +37,7 @@ rules:
     - error
   no-var:
     - error
+  no-useless-escape:
+    - off
+  no-control-regex:
+    - off

@@ -14,5 +14,5 @@ db.createUser({
             "db": "admin" 
         }
     ]
-})
+});
 EOF

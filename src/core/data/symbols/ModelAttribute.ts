@@ -1,0 +1,1 @@
+export const ModelAttribute = Symbol("model:attribute")

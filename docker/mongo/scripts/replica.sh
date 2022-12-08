@@ -18,5 +18,5 @@ rs.initiate({
             "arbiterOnly": true
         }
     ]
-})
+});
 EOF

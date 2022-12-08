@@ -2,6 +2,7 @@
 import { Console } from "../core/data/enums/Console"
 import MigrationFilesPrint from "../core/decorators/MigrationFilesPrint"
 import MigrationExecutor from "../core/foundations/MigrationExecutor"
+import Method from "../core/helpers/Method"
 import print from "../core/hooks/print"
 import MigrationApplyingException from "../exceptions/MigrationApplyingException"
 
@@ -12,7 +13,7 @@ export default class MigrationUp extends MigrationExecutor
      */
     public static MIGRATION_APPLYING_ERROR = -2
 
-    @MigrationFilesPrint("Below files will be applied:")
+    @Method(MigrationFilesPrint, "Below files will be applied:")
     public async execute(): Promise<number>
     {
         for (const migration of this.migrations) {
@@ -23,7 +24,7 @@ export default class MigrationUp extends MigrationExecutor
                 return MigrationUp.MIGRATION_APPLYING_ERROR
             }
 
-            print(`Successful reverted migration: ${migration}`, Console.GREEN)
+            print(`Successful aplied migration: ${migration}`, Console.GREEN)
         }
 
         return MigrationUp.SUCCESS

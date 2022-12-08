@@ -40,6 +40,11 @@ export default abstract class MigrationExecutor extends MigrationCommand
         return new RegExp(`^${MigrationExecutor.MIGRATION_PREFIX}_(.+)\\.js$`)
     }
 
+    public get migrationsList(): Array<string>
+    {
+        return this.migrations
+    }
+
     public get current(): MigrationConstructor
     {
         if (this.currentMigration) {

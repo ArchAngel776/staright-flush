@@ -1,6 +1,4 @@
-import { Safe } from "../types/Safe"
-
-export default interface Bin<Type = Safe, Arguments = Safe> 
+export default interface Bin<Type = void, Arguments extends Array<unknown> = []> 
 {
-    (...args: Array<Arguments>): Type
+    (...args: Arguments): Type
 }

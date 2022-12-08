@@ -1,0 +1,1 @@
+export const ModelDefault = Symbol("model:default")
