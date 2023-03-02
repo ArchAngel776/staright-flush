@@ -1,5 +1,5 @@
-import { AsyncAwait } from "../../../core/data/types/AsyncAwait";
-import format from "../../../core/hooks/format";
+import { AsyncAwait } from "../../../core/data/types/AsyncAwait"
+import format from "../../../core/hooks/format"
 import Validator from "../../../core/Validator"
 
 export default class PatternValidator<Schema> extends Validator<Schema, RegExp>

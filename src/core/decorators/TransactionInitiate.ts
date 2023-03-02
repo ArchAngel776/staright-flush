@@ -4,12 +4,12 @@ import MethodModel from "../foundations/MethodModel"
 
 export default class TransactionInitiate extends MethodModel<Connection, Promise<Transaction>>
 {
-    public async method(): Promise<Transaction>
+    public async method(this: Connection, { original, init }: TransactionInitiate): Promise<Transaction>
     {
-        return this.original().then(this.init)
+        return original().then(init)
     }
 
-    protected init(transaction: Transaction): Transaction
+    public init(transaction: Transaction): Transaction
     {
         transaction.init()
         return transaction

@@ -1,6 +1,6 @@
-import { AsyncAwait } from "../../../core/data/types/AsyncAwait";
-import format from "../../../core/hooks/format";
-import strBool from "../../../core/hooks/strBool";
+import { AsyncAwait } from "../../../core/data/types/AsyncAwait"
+import format from "../../../core/hooks/format"
+import strBool from "../../../core/hooks/strBool"
 import Validator from "../../../core/Validator"
 
 export default class AlwaysValidator<Schema> extends Validator<Schema, boolean>

@@ -5,7 +5,9 @@ import { ModelAttributesKeys } from "../data/symbols/ModelAttributesKeys"
 import { ModelDefaultsKeys } from "../data/symbols/ModelDefaultsKeys"
 import { ModelAttribute } from "../data/symbols/ModelAttribute"
 import { ModelDefault } from "../data/symbols/ModelDefault"
-import defined from "../hooks/defined"
+import { Keyof } from "../data/types/Keyof"
+import multi from "../hooks/multi"
+import { Defaults } from "../data/types/Defaults"
 import "reflect-metadata"
 
 export default function ModelSignature<Schema extends ModelSchema>()
@@ -17,21 +19,20 @@ export default function ModelSignature<Schema extends ModelSchema>()
             public validation(): Scenarios<Schema>
             {
                 const validators = super.validation()
-                const keys: Array<keyof Schema> = Reflect.getOwnMetadata(ModelAttributesKeys, Target.prototype) || []
+                const keys: Array<Keyof<Schema>> = Reflect.getOwnMetadata(ModelAttributesKeys, Target.prototype) || []
 
                 keys.forEach(attribute => {
-                    if (!defined(validators[attribute])) {
-                        validators[attribute] = []
-                    }
-                    validators[attribute]?.push(...Reflect.getOwnMetadata(ModelAttribute, Target.prototype, <string> attribute))
+                    const validator = multi(validators[attribute] || [])
+                    validators[attribute] = validator.splice(validator.length, 0, ...Reflect.getOwnMetadata(ModelAttribute, Target.prototype, attribute))
                 })
+
                 return validators
             }
 
-            public defaults(): Partial<Schema>
+            public defaults(): Defaults<Schema>
             {
                 const defaults = super.defaults()
-                const keys: Array<keyof Schema> = Reflect.getOwnMetadata(ModelDefaultsKeys, Target.prototype) || []
+                const keys: Array<Keyof<Schema>> = Reflect.getOwnMetadata(ModelDefaultsKeys, Target.prototype) || []
 
                 keys.forEach(attribute => defaults[attribute] = Reflect.getOwnMetadata(ModelDefault, Target.prototype, <string> attribute))
                 return defaults

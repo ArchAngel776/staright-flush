@@ -1,6 +1,6 @@
-import { Document, ObjectId } from "mongodb"
+import { ObjectId } from "mongodb"
 
-export default interface ModelSchema extends Document
+export default interface ModelSchema
 {
     _id: ObjectId
 }

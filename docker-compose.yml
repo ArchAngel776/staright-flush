@@ -18,15 +18,18 @@ services:
     environment:
       NODE_ENV: dev
       PORT: 3000
-      DB_HOST: s1.database.straight-flush.pl
+      DB_HOST: s1.database.straight-flush.pl,s2.database.straight-flush.pl,sa.database.straight-flush.pl
       DB_PORT: 27017
       DB_USER: straight-flush
       DB_PASS: password
       DB_NAME: straight-flush
+      DB_REPL: rsStraightFlush
     working_dir: /app
     command: node build/index.js
     depends_on:
       - db-primary
+      - db-secondary
+      - db-arbiter
     networks:
       net-straight-flush:
         aliases:
@@ -92,11 +95,7 @@ services:
       - "8080:8081"
     environment:
       ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
-      ME_CONFIG_MONGODB_SERVER: s1.database.straight-flush.pl
-      ME_CONFIG_MONGODB_PORT: 27017
-      ME_CONFIG_MONGODB_AUTH_USERNAME: straight-flush
-      ME_CONFIG_MONGODB_AUTH_PASSWORD: password
-      ME_CONFIG_MONGODB_AUTH_DATABASE: straight-flush
+      ME_CONFIG_MONGODB_URL: mongodb://straight-flush:password@s1.database.straight-flush.pl:27017,s2.database.straight-flush.pl:27017,sa.database.straight-flush.pl:27017/straight-flush?ssl=false&replicaSet=rsStraightFlush
     command: node --unhandled-rejections=strict app
     depends_on:
       - db-primary

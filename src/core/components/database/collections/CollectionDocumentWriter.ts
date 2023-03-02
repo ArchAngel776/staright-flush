@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Filter, FindOneAndUpdateOptions, ObjectId, UpdateFilter } from "mongodb"
-import Connection from "../Connection"
+import { Filter, FindOneAndUpdateOptions, MatchKeysAndValues, ObjectId, ReturnDocument, UpdateFilter } from "mongodb"
 import ModelSchema from "../../../data/interfaces/ModelSchema"
 import Model from "../../../Model"
 import { Attr } from "../../../data/types/Attr"
@@ -8,29 +7,18 @@ import Method from "../../../helpers/Method"
 import SetupOriginals from "../../../decorators/models/document/SetupOriginals"
 import { Constructor } from "../../../data/types/Constructor"
 import FilterOriginals from "../../../decorators/models/document/FilterOriginals"
+import CollectionDocument from "../../../foundations/CollectionDocument"
 
-export default class CollectionDocumentWriter<Schema extends ModelSchema>
+export default class CollectionDocumentWriter<Schema extends ModelSchema> extends CollectionDocument
 {
-    protected connection: Connection
-
-    public constructor()
-    {
-        this.connection = Connection.getConnection()
-    }
-
     protected findFilter(_id: Attr<ObjectId>): Filter<Schema>
     {
-        return { _id } as Filter<Schema>
+        return <Filter<Schema>> { _id }
     }
 
     protected data(data: Partial<Schema>): UpdateFilter<Schema>
     {
-        return { $set: data as Schema }
-    }
-
-    protected options(): FindOneAndUpdateOptions
-    {
-        return { upsert: true, returnDocument: "after" }
+        return { $set: data as MatchKeysAndValues<Schema> }
     }
 
     @Method(<Constructor<SetupOriginals<Schema>>> SetupOriginals)
@@ -38,7 +26,7 @@ export default class CollectionDocumentWriter<Schema extends ModelSchema>
     public async saveDocument(model: Model<Schema>): Promise<boolean>
     {
         const { value } = await this.connection.make(database => database.collection<Schema>(model.collection()).findOneAndUpdate(
-            this.findFilter(model.attributes._id), this.data(model.attributes), this.options()
+            this.findFilter(model.attributes._id), this.data(model.attributes), this.getOptions()
         ))
 
         if (!value) {
@@ -47,5 +35,13 @@ export default class CollectionDocumentWriter<Schema extends ModelSchema>
 
         model.attributes = <Schema> value
         return true
+    }
+
+    protected getOptions(): FindOneAndUpdateOptions
+    {
+        const options: FindOneAndUpdateOptions = super.getOptions()
+        options.upsert = true
+        options.returnDocument = ReturnDocument.AFTER
+        return options
     }
 }

@@ -2,8 +2,10 @@
 import Scenario from "../data/interfaces/Scenario"
 import { Scenarios } from "../data/interfaces/Scenarios"
 import { Constructor } from "../data/types/Constructor"
+import { Keyof } from "../data/types/Keyof"
 import CreateIfNotExists from "../decorators/models/scenarios/CreateIfNotExists"
 import Method from "../helpers/Method"
+import multi from "../hooks/multi"
 
 export default class ValidationScenarios<Schema>
 {
@@ -19,20 +21,21 @@ export default class ValidationScenarios<Schema>
         return this.scenarios
     }
 
-    public getScenarios(attribute: keyof Schema): Array<Scenario<Schema>>
+    public getScenarios(attribute: Keyof<Schema>): Array<Scenario<Schema>>
     {
-        return this.scenarios[attribute] || []
+        return multi(this.scenarios[attribute] || []) 
     }
 
-    public getScenariosProperties(): Array<keyof Schema>
+    public getScenariosProperties(): Array<Keyof<Schema>>
     {
-        return Object.keys(this.scenarios).map(key => <keyof Schema> key)
+        return Object.keys(this.scenarios).map(key => <Keyof<Schema>> key)
     }
 
     @Method(<Constructor<CreateIfNotExists<Schema>>> CreateIfNotExists)
-    public addScenario(attribute: keyof Schema, validation: Scenario<Schema>): this
+    public addScenario(attribute: Keyof<Schema>, validation: Scenario<Schema>): this
     {
-        this.scenarios[attribute]?.push(validation)
+        const scenario = this.getScenarios(attribute)
+        this.scenarios[attribute] = scenario.splice(scenario.length, 0, validation)
         return this
     }
 

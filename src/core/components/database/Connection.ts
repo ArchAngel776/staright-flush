@@ -9,15 +9,15 @@ import TransactionInitiate from "../../decorators/TransactionInitiate"
 
 export default class Connection
 {
-    protected static readonly instance: Connection = new Connection(Env.DB_HOST, parseInt(Env.DB_PORT), Env.DB_NAME, Env.DB_USER, Env.DB_PASS)
+    protected static readonly instance: Connection = new Connection(Env.DB_HOST, parseInt(Env.DB_PORT), Env.DB_NAME, Env.DB_USER, Env.DB_PASS, Env.DB_REPL)
 
     protected readonly mongoURL: MongoURL
 
     protected database: string
 
-    protected constructor(host: string, port: number, database: string, user?: string, password?: string)
+    protected constructor(host: string, port: number, database: string, user?: string, password?: string, replicaSet?: string)
     {
-        this.mongoURL = new MongoURL(host, port, database, user, password)
+        this.mongoURL = new MongoURL(host, port, database, user, password, replicaSet)
         this.database = database
     }
 
@@ -48,6 +48,12 @@ export default class Connection
     public setDatabase(database: string): this
     {
         this.mongoURL.setDatabase(this.database = database)
+        return this
+    }
+
+    public setReplicaSet(replicaSet: string): this
+    {
+        this.mongoURL.setReplicaSet(replicaSet)
         return this
     }
 

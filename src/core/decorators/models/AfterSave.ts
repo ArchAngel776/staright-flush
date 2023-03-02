@@ -4,10 +4,10 @@ import MethodModel from "../../foundations/MethodModel"
 
 export default class AfterSave<Schema extends ModelSchema> extends MethodModel<ModelEvents<Schema>, Promise<boolean>>
 {
-    public async method(): Promise<boolean>
+    public async method(this: ModelEvents<Schema>, { original }: AfterSave<Schema>): Promise<boolean>
     {
-        const result = await this.original()
-        await this.target.afterSave()
+        const result = await original()
+        await this.afterSave()
         return result
     }
 }

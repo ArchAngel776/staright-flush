@@ -1,3 +1,6 @@
-export type ModelFirstErrorsData<Schema> = {
-    [property in keyof Schema]?: string | undefined
+import { Keyof } from "./Keyof"
+
+export type ModelFirstErrorsData<Schema> =
+{
+    [Key in Keyof<Schema>]?: string
 }

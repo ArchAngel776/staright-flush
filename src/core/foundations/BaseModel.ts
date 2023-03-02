@@ -35,7 +35,7 @@ export default class BaseModel<Schema>
 
     public validation(): Scenarios<Schema>
     {
-        return {}
+        return <Scenarios<Schema>> {}
     }
 
     public get attributes(): Partial<Schema>

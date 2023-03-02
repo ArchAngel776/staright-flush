@@ -1,7 +1,11 @@
 import { ClientSession, Collection, Db, Document, IndexSpecification } from "mongodb"
+import { Multi } from "./data/types/Multi"
+import multi from "./hooks/multi"
 
 export default abstract class Migration
 {
+    public static INDEX_FIELD = 1
+
     protected database: Db
 
     protected session: ClientSession
@@ -41,14 +45,11 @@ export default abstract class Migration
         return this.database.collection(collection).indexExists(name)
     }
 
-    public createIndex(name: string, collection: string, fields: string|Array<string>, unique = false): Promise<string>
+    public createIndex(name: string, collection: string, fields: Multi<string>, unique = false): Promise<string>
     {
-        if (!Array.isArray(fields)) {
-            fields = [ fields ]
-        }
-
         const index: IndexSpecification = {}
-        fields.forEach(field => index[field] = 1)
+        multi(fields).forEach(field => index[field] = Migration.INDEX_FIELD)
+
         return this.database.collection(collection).createIndex(index, {
             name, unique,
             session: this.session

@@ -4,9 +4,9 @@ import Model from "../../Model"
 
 export default class ModelValidation<Schema extends ModelSchema> extends MethodModel<Model<Schema>, Promise<boolean>>
 {
-    public async method(): Promise<boolean>
+    public async method(this: Model<Schema>, { original }: ModelValidation<Schema>): Promise<boolean>
     {
-        this.target.errors.clearAllErrors()
-        return await this.target.validate() ? this.original() : false
+        this.errors.clearAllErrors()
+        return await this.validate() ? original() : false
     }
 }

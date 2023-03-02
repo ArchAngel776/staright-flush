@@ -6,19 +6,32 @@ import print from "../hooks/print"
 
 export default class MigrationFilesPrint extends MethodModel<MigrationExecutor, AsyncAwait<number>>
 {
-    protected title: string
+    protected titleOnMigrations: string
 
-    public constructor(target: MigrationExecutor, title: string)
+    protected titleWithoutMigrations: string
+
+    public constructor(target: MigrationExecutor, titleOnMigrations: string, titleWithoutMigrations: string)
     {
         super(target)
-        this.title = title
+        this.titleOnMigrations = titleOnMigrations
+        this.titleWithoutMigrations = titleWithoutMigrations
     }
 
-    public method(): AsyncAwait<number>
+    public method(this: MigrationExecutor, { original, printOnMigrations, printWithoutMigrations }: MigrationFilesPrint): AsyncAwait<number>
     {
-        print(this.title)
-        this.target.migrationsList.forEach(migraion => print(migraion, Console.YELLOW))
+        this.migrationsList.length ? printOnMigrations(this.migrationsList) : printWithoutMigrations()
+        return original()
+    }
+
+    protected printOnMigrations(migrations: Array<string>): void
+    {
+        print(this.titleOnMigrations)
+        migrations.forEach(migraion => print(migraion, Console.YELLOW))
         print()
-        return this.original()
+    }
+
+    protected printWithoutMigrations(): void
+    {
+        print(this.titleWithoutMigrations)
     }
 }

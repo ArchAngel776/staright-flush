@@ -8,4 +8,5 @@ export default interface Environment extends NodeJS.ProcessEnv
     DB_USER: string
     DB_PASS: string
     DB_NAME: string
+    DB_REPL: string
 }

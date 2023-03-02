@@ -1,6 +1,8 @@
 import { Validators } from "../../core/data/interfaces/Validators"
+import { Keyof } from "../../core/data/types/Keyof"
 import BaseModel from "../../core/foundations/BaseModel"
 import Validation, { ValidationData } from "../../core/foundations/Validation"
+import NeastedObjectHelper from "../../core/helpers/NeastedObjectHelper"
 import merge from "../../core/hooks/merge"
 import AlwaysValidator from "./boolean/AlwaysValidator"
 
@@ -18,9 +20,10 @@ export default class BooleanValidation<Schema> extends Validation<Schema, Boolea
         })
     }
 
-    public isValid(model: BaseModel<Schema>, attribute: keyof Schema): boolean
+    public isValid(model: BaseModel<Schema>, attribute: Keyof<Schema>): boolean
     {
-        return typeof model.attributes[attribute] === "boolean"
+        const helper = new NeastedObjectHelper(<Schema> model.attributes)
+        return typeof helper.get(attribute) === "boolean"
     }
 
     public getErrorMessage(): string

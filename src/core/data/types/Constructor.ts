@@ -1,2 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Constructor<Type = any, Params = any> = new (...args: Array<Params>) => Type 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { FunctionArguments } from "./FunctionArguments"
+
+export type Constructor<Type = any, Params extends FunctionArguments = any> = new (...args: Params) => Type 
