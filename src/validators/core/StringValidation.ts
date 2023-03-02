@@ -6,6 +6,8 @@ import MinValidator from "./string/MinValidator"
 import LengthValidator from "./string/LengthValidator"
 import PatternValidator from "./string/PatternValidator"
 import BaseModel from "../../core/foundations/BaseModel"
+import { Keyof } from "../../core/data/types/Keyof"
+import NeastedObjectHelper from "../../core/helpers/NeastedObjectHelper"
 
 export interface StringValidationData extends ValidationData
 {
@@ -27,9 +29,10 @@ export default class StringValidation<Schema> extends Validation<Schema, StringV
         })
     }
 
-    public isValid(model: BaseModel<Schema>, attribute: keyof Schema): boolean
+    public isValid(model: BaseModel<Schema>, attribute: Keyof<Schema>): boolean
     {
-        return typeof model.attributes[attribute] === "string"
+        const helper = new NeastedObjectHelper(<Schema> model.attributes)
+        return typeof helper.get(attribute) === "string"
     }
 
     public getErrorMessage(): string

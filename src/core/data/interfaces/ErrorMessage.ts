@@ -1,3 +1,4 @@
-export type ErrorMessage<Data> = {
+export type ErrorMessage<Data> =
+{
     [property in keyof Data]?: string | undefined
 }

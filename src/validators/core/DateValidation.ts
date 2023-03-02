@@ -1,6 +1,8 @@
 import { Validators } from "../../core/data/interfaces/Validators"
+import { Keyof } from "../../core/data/types/Keyof"
 import BaseModel from "../../core/foundations/BaseModel"
 import Validation, { ValidationData } from "../../core/foundations/Validation"
+import NeastedObjectHelper from "../../core/helpers/NeastedObjectHelper"
 import merge from "../../core/hooks/merge"
 import NewerThenValidator from "./date/NewerThenValidator"
 import OlderThenValidator from "./date/OlderThenValidator"
@@ -21,9 +23,10 @@ export default class DateValidation<Schema> extends Validation<Schema, DateValid
         })
     }
 
-    public isValid(model: BaseModel<Schema>, attribute: keyof Schema): boolean
+    public isValid(model: BaseModel<Schema>, attribute: Keyof<Schema>): boolean
     {
-        return model.attributes[attribute] instanceof Date
+        const helper = new NeastedObjectHelper(<Schema> model.attributes)
+        return helper.get(attribute) instanceof Date
     }
 
     public getErrorMessage(): string

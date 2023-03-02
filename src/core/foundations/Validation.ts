@@ -12,6 +12,8 @@ import RequiredValidator from "./validation/RequiredValidator"
 import Scenario from "../data/interfaces/Scenario"
 import defined from "../hooks/defined"
 import { ErrorMessage } from "../data/interfaces/ErrorMessage"
+import assert from "../hooks/assert"
+import { Keyof } from "../data/types/Keyof"
 
 export interface ValidationData
 {
@@ -36,14 +38,12 @@ export default abstract class Validation<Schema, Data extends ValidationData> im
         }
     }
 
-    public abstract isValid(model: BaseModel<Schema>, attribute: keyof Schema): AsyncAwait<boolean>
+    public abstract isValid(model: BaseModel<Schema>, attribute: Keyof<Schema>): AsyncAwait<boolean>
 
     @Method(<Constructor<Required<Schema, Data>>> Required)
-    public async make(model: BaseModel<Schema>, attribute: keyof Schema): Promise<void>
+    public async make(model: BaseModel<Schema>, attribute: Keyof<Schema>): Promise<void>
     {
-        if (!await this.isValid(model, attribute)) {
-            throw this.getErrorMessage(model, attribute)
-        }
+        assert(await this.isValid(model, attribute), this.getErrorMessage(model, attribute))
 
         const validators: Validators<Schema, Data> = cast(this.validators())
         
@@ -57,11 +57,9 @@ export default abstract class Validation<Schema, Data extends ValidationData> im
 
             const value = <Data[keyof Data]> this.data[property]
 
-            if (!await validator.validate(value)) {
-                throw format(this.getCustomError(property) || validator.getErrorMessage(), {
-                    attribute: <string> attribute
-                })
-            }
+            assert(await validator.validate(value), format(this.getCustomError(property) || validator.getErrorMessage(), {
+                attribute: <string> attribute
+            }))
         }
     }
 
@@ -76,7 +74,7 @@ export default abstract class Validation<Schema, Data extends ValidationData> im
         return errorMessages[property]
     }
 
-    public getErrorMessage(model: BaseModel<Schema>, attribute: keyof Schema): string
+    public getErrorMessage(model: BaseModel<Schema>, attribute: Keyof<Schema>): string
     {
         return "Invalid property {attribute}"
     }

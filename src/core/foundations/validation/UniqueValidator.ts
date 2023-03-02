@@ -36,7 +36,7 @@ export default class UniqueValidator<Schema> extends Validator<Schema, boolean |
     protected filter(): Filter<Schema>
     {
         const filter: Partial<Schema> = {}
-        filter[this.attribute] = this.getProperty()
+        filter[this.attributeName as keyof Schema] = this.getProperty()
         return filter
     }
 

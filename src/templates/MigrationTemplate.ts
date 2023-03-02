@@ -1,4 +1,5 @@
 import { relative, resolve } from "path"
+import { String } from "../core/data/enums/String"
 import { CodePart } from "../core/data/types/CodePart"
 import { Import } from "../core/data/types/Import"
 import Comment from "../core/helpers/Comment"
@@ -31,7 +32,7 @@ export default class MigrationTemplate extends Template
                 [
                     "return true"
                 ],
-                "",
+                String.EMPTY,
                 Comment.block("@returns {boolean}"),
                 "async revert()", 
                 [

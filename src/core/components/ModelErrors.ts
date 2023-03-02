@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Constructor } from "../data/types/Constructor"
+import { Keyof } from "../data/types/Keyof"
 import { ModelErrorsData } from "../data/types/ModelErrorsData"
 import { ModelFirstErrorsData } from "../data/types/ModelFirstErrorsData"
 import CreateIfNotExists from "../decorators/models/errors/CreateIfNotExists"
@@ -20,7 +21,7 @@ export default class ModelErrors<Schema>
         return this.errors
     }
 
-    public getError(property: keyof Schema): Array<string>
+    public getError(property: Keyof<Schema>): Array<string>
     {
         return this.errors[property] || []
     }
@@ -30,37 +31,35 @@ export default class ModelErrors<Schema>
         return !empty(this.getErrors())
     }
 
-    public hasError(property: keyof Schema): boolean
+    public hasError(property: Keyof<Schema>): boolean
     {
         return !empty(this.getError(property))
     }
 
     public getFirstErrors(): ModelFirstErrorsData<Schema>
     {
-        const firstErrors: ModelFirstErrorsData<Schema> = {}
-        for (const property in this.errors) {
-            firstErrors[property] = this.errors[property]?.shift()
-        }
-        return firstErrors
+        const errors: ModelFirstErrorsData<Schema> = {}
+        this.getErrorsProperties().forEach(property => errors[property] = this.getFirstError(property))
+        return errors
     }
 
-    public getFirstError(property: keyof Schema): string | undefined
+    public getFirstError(property: Keyof<Schema>): string | undefined
     {
         return this.getError(property).shift()
     }
 
-    public getErrorsProperties(): Array<keyof Schema>
+    public getErrorsProperties(): Array<Keyof<Schema>>
     {
-        return Object.keys(this.errors).map(key => <keyof Schema> key)
+        return Object.keys(this.errors).map(key => key as Keyof<Schema>)
     }
 
-    public getFirstErrorProperty(): keyof Schema | undefined
+    public getFirstErrorProperty(): Keyof<Schema> | undefined
     {
         return this.getErrorsProperties().shift()
     }
 
     @Method(<Constructor<CreateIfNotExists<Schema>>> CreateIfNotExists)
-    public appendError(attribute: keyof Schema, message: string): this
+    public appendError(attribute: Keyof<Schema>, message: string): this
     {
         this.errors[attribute]?.push(message)
         return this
@@ -68,11 +67,11 @@ export default class ModelErrors<Schema>
 
     public clearAllErrors(): this
     {
-        this.getErrorsProperties().forEach(this.clearErrors)
+        this.getErrorsProperties().forEach(attribute => this.clearErrors(attribute))
         return this
     }
 
-    public clearErrors(attribute: keyof Schema): this
+    public clearErrors(attribute: Keyof<Schema>): this
     {
         delete this.errors[attribute]
         return this

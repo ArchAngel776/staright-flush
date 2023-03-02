@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Console } from "../core/data/enums/Console"
 import MigrationFilesPrint from "../core/decorators/MigrationFilesPrint"
+import OnlyNewMigrations from "../core/decorators/OnlyNewMigrations"
 import MigrationExecutor from "../core/foundations/MigrationExecutor"
 import Method from "../core/helpers/Method"
 import print from "../core/hooks/print"
@@ -13,7 +14,8 @@ export default class MigrationUp extends MigrationExecutor
      */
     public static MIGRATION_APPLYING_ERROR = -2
 
-    @Method(MigrationFilesPrint, "Below files will be applied:")
+    @Method(OnlyNewMigrations)
+    @Method(MigrationFilesPrint, "Below files will be applied:", "No migrations to applying.")
     public async execute(): Promise<number>
     {
         for (const migration of this.migrations) {
@@ -24,7 +26,7 @@ export default class MigrationUp extends MigrationExecutor
                 return MigrationUp.MIGRATION_APPLYING_ERROR
             }
 
-            print(`Successful aplied migration: ${migration}`, Console.GREEN)
+            print(`Successful applied migration: ${migration}`, Console.GREEN)
         }
 
         return MigrationUp.SUCCESS

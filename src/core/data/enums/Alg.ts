@@ -1,3 +1,4 @@
-export enum Alg {
+export enum Alg
+{
     SHA256 = "sha256"
 }

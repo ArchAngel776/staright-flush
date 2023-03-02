@@ -47,10 +47,10 @@ export default abstract class MigrationExecutor extends MigrationCommand
 
     public get current(): MigrationConstructor
     {
-        if (this.currentMigration) {
-            return this.currentMigration
+        if (!this.currentMigration) {
+            throw new EmptyMigrationException
         }
-        throw new EmptyMigrationException
+        return this.currentMigration
     }
 
     public set current(migration: MigrationConstructor)

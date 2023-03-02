@@ -21,11 +21,11 @@ export default class CodeNeaster
 
         for (const part of parts) {
             if (part instanceof Array) {
-                result.push(...[
+                result.push(
                     this.tabLine(CodeNeaster.CODE_OPEN, tabulator), 
                     ...this.compileParts(part, tabulator + 1), 
                     this.tabLine(CodeNeaster.CODE_CLOSE, tabulator)
-                ])
+                )
             }
             else {
                 result.push(this.tabLine(part, tabulator))

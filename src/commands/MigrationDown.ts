@@ -5,6 +5,7 @@ import MigrationRevertingException from "../exceptions/MigrationRevertingError"
 import print from "../core/hooks/print"
 import { Console } from "../core/data/enums/Console"
 import Method from "../core/helpers/Method"
+import OnlyExistingMigrations from "../core/decorators/OnlyExistingMigrations"
 
 export default class MigrationDown extends MigrationExecutor
 {
@@ -13,7 +14,8 @@ export default class MigrationDown extends MigrationExecutor
      */
     public static MIGRATION_REVERTING_ERROR = -2
 
-    @Method(MigrationFilesPrint, "Below files will be reverted:")
+    @Method(OnlyExistingMigrations)
+    @Method(MigrationFilesPrint, "Below files will be reverted:", "No migrations to reverting.")
     public async execute(): Promise<number>
     {
         for (const migration of this.migrations) {

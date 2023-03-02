@@ -1,16 +1,25 @@
 import { Filter } from "mongodb"
 import ModelEvents from "../../data/interfaces/ModelEvents"
 import ModelSchema from "../../data/interfaces/ModelSchema"
+import { AsyncAwait } from "../../data/types/AsyncAwait"
 import { Nullable } from "../../data/types/Nullable"
+import { ProjectionData } from "../../data/types/ProjectionData"
 import MethodModel from "../../foundations/MethodModel"
 import Model from "../../Model"
 
-export default class AfterFind<Schema extends ModelSchema> extends MethodModel<ModelEvents<Schema>, Promise<Nullable<Model<Schema>>>, [Filter<Schema>]>
+export default class AfterFind<Schema extends ModelSchema> extends MethodModel<ModelEvents<Schema>, Promise<Nullable<Model<Schema>>>, [filter: Filter<Schema>, projection?: ProjectionData<Schema>]>
 {
-    public async method(filter: Filter<Schema>): Promise<Nullable<Model<Schema>>>
+    public async method(this: ModelEvents<Schema>, { original, runAfterFind }: AfterFind<Schema>, filter: Filter<Schema>, projection?: ProjectionData<Schema>): Promise<Nullable<Model<Schema>>>
     {
-        const result = await this.original(filter)
-        await this.target.afterFind()
+        const result = await original(filter, projection)
+        if (result) {
+            await runAfterFind(result)
+        }
         return result
+    }
+
+    public runAfterFind(model: ModelEvents<Schema>): AsyncAwait<void>
+    {
+        return model.afterFind()
     }
 }

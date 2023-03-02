@@ -25,18 +25,16 @@ export default function Attribute<Schema extends ModelSchema, Data extends Valid
             }
         })
 
-        if (!Validation) {
-            return
+        if (Validation) {
+            const validatorsKeys: Array<string> = Reflect.getOwnMetadata(ModelAttributesKeys, target) || []
+            validatorsKeys.push(<string> attribute)
+
+            Reflect.defineMetadata(ModelAttributesKeys, validatorsKeys.filter(uniqueFilter), target)
+
+            const validators: Array<Validation<Schema, Data>> = Reflect.getOwnMetadata(ModelAttribute, target, <string> attribute) || []
+            validators.push(new Validation(data))
+
+            Reflect.defineMetadata(ModelAttribute, validators, target, <string> attribute)
         }
-
-        const validatorsKeys: Array<string> = Reflect.getOwnMetadata(ModelAttributesKeys, target) || []
-        validatorsKeys.push(<string> attribute)
-
-        Reflect.defineMetadata(ModelAttributesKeys, validatorsKeys.filter(uniqueFilter), target)
-
-        const validators: Array<Validation<Schema, Data>> = Reflect.getOwnMetadata(ModelAttribute, target, <string> attribute) || []
-        validators.push(new Validation(data))
-
-        Reflect.defineMetadata(ModelAttribute, validators, target, <string> attribute)
     }
 }

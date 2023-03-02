@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Except from "../core/decorators/Except";
+import Except from "../core/decorators/Except"
 import Exception from "../core/Exception"
 
 @Except

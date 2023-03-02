@@ -1,7 +1,9 @@
 import { Validators } from "../../core/data/interfaces/Validators"
 import { Constructor } from "../../core/data/types/Constructor"
+import { Keyof } from "../../core/data/types/Keyof"
 import BaseModel from "../../core/foundations/BaseModel"
 import Validation, { ValidationData } from "../../core/foundations/Validation"
+import NeastedObjectHelper from "../../core/helpers/NeastedObjectHelper"
 import merge from "../../core/hooks/merge"
 import TypeofValidator from "./object/TypeofValidator"
 
@@ -19,9 +21,10 @@ export default class ObjectValidation<Schema> extends Validation<Schema, ObjectV
         })
     }
 
-    public isValid(model: BaseModel<Schema>, attribute: keyof Schema): boolean
+    public isValid(model: BaseModel<Schema>, attribute: Keyof<Schema>): boolean
     {
-        return typeof model.attributes[attribute] === "object"
+        const helper = new NeastedObjectHelper(<Schema> model.attributes)
+        return typeof helper.get(attribute) === "object"
     }
 
     public getErrorMessage(): string
