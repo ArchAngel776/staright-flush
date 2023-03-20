@@ -1,10 +1,13 @@
-import ModelSchema from "../data/interfaces/ModelSchema"
-import { Keyof } from "../data/types/Keyof"
-import { Multi } from "../data/types/Multi"
-import { Valueof } from "../data/types/Valueof"
-import NeastedObjectHelper from "../helpers/NeastedObjectHelper"
-import multi from "../hooks/multi"
-import { ModelTimestampsConstructor } from "./constructors/ModelTimestampsContructor"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import { Keyof } from "@data/types/Keyof"
+import { Multi } from "@data/types/Multi"
+import { Valueof } from "@data/types/Valueof"
+
+import NeastedObjectHelper from "@helpers/NeastedObjectHelper"
+import { ModelTimestampsConstructor } from "@decorators/constructors/ModelTimestampsContructor"
+
+import multi from "@hooks/multi"
+
 
 export default function ModelTimestamps<Schema extends ModelSchema>(created_at?: Multi<Keyof<Schema>>, updated_at?: Multi<Keyof<Schema>>)
 {
@@ -12,7 +15,7 @@ export default function ModelTimestamps<Schema extends ModelSchema>(created_at?:
     {
         return class extends Target
         {
-            public beforeSave(): boolean
+            public beforeSave(): Promise<boolean>
             {
                 const date = <Valueof<Schema, Keyof<Schema>>> new Date
                 const helper = new NeastedObjectHelper(<Schema> this.attributes)

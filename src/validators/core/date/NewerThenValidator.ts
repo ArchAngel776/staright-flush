@@ -1,22 +1,32 @@
-import DateHelper from "../../../core/helpers/DateHelper"
-import format from "../../../core/hooks/format"
-import timestamp from "../../../core/hooks/timestamp"
-import Validator from "../../../core/Validator"
+import DateHelper from "@helpers/DateHelper"
+import ValidatorSignature from "@decorators/signatures/ValidatorSignature"
 
-export default class NewerThenValidator<Schema> extends Validator<Schema, Date>
+import format from "@hooks/format"
+import timestamp from "@hooks/timestamp"
+
+import Validator from "@core/Validator"
+
+
+@ValidatorSignature()
+export default class NewerThenValidator<Schema> extends Validator<Schema, Date, Date>
 {
-    protected value = new Date
+    protected date!: Date
 
-    public validate(value: Date): boolean
+    public init(date: Date): void
     {
-        return timestamp(this.getProperty<Date>()) > timestamp(this.value = value)
+        this.date = date
+    }
+
+    public validate(date: Date): boolean
+    {
+        return timestamp(this.getProperty()) > timestamp(date)
     }
 
     public getErrorMessage(): string
     {
         return format("Date property {attribute} must be newer than {date}", {
             attribute: this.attributeName,
-            date: DateHelper.format("d-m-Y H:i:s", this.value)
+            date: DateHelper.format("d-m-Y H:i:s", this.date)
         })
     }
 }

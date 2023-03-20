@@ -1,23 +1,27 @@
-import { Validators } from "../../core/data/interfaces/Validators"
-import { Keyof } from "../../core/data/types/Keyof"
-import BaseModel from "../../core/foundations/BaseModel"
-import Validation, { ValidationData } from "../../core/foundations/Validation"
-import NeastedObjectHelper from "../../core/helpers/NeastedObjectHelper"
-import merge from "../../core/hooks/merge"
-import DividedValidator from "./number/DividedValidator"
-import MaxValidator from "./number/MaxValidator"
-import MinValidator from "./number/MinValidator"
+import { Validators } from "@data/interfaces/Validators"
+import { Keyof } from "@data/types/Keyof"
 
-export interface NumberValidationData extends ValidationData
+import BaseModel from "@foundations/BaseModel"
+import Validation, { ValidationData } from "@foundations/Validation"
+import NeastedObjectHelper from "@helpers/NeastedObjectHelper"
+
+import merge from "@hooks/merge"
+
+import DividedValidator from "@validators/core/number/DividedValidator"
+import MaxValidator from "@validators/core/number/MaxValidator"
+import MinValidator from "@validators/core/number/MinValidator"
+
+
+export interface NumberValidationData<Schema> extends ValidationData<Schema>
 {
     min: number
     max: number
     divided: number
 }
 
-export default class NumberValidation<Schema> extends Validation<Schema, NumberValidationData>
+export default class NumberValidation<Schema> extends Validation<Schema, NumberValidationData<Schema>>
 {
-    public validators(): Validators<Schema, NumberValidationData>
+    public validators(): Validators<Schema, NumberValidationData<Schema>>
     {
         return merge(super.validators(), {
             min: MinValidator,

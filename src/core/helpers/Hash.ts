@@ -1,5 +1,7 @@
 import { createHash, BinaryToTextEncoding } from "crypto"
-import { Alg } from "../data/enums/Alg"
+
+import { Alg } from "@data/enums/Alg"
+
 
 export default class Hash
 {

@@ -1,10 +1,13 @@
 import { parse } from "path"
-import Connection from "../../components/database/Connection"
-import DatabaseOperation from "../../data/callbacks/DatabaseOperation"
-import OnlyNewMigrations from "../../decorators/OnlyNewMigrations"
-import MigrationHelper from "../../helpers/MigrationHelper"
-import MethodModel from "../MethodModel"
-import MigrationExecutor from "../MigrationExecutor"
+
+import DatabaseOperation from "@data/callbacks/DatabaseOperation"
+
+import MethodModel from "@foundations/MethodModel"
+import MigrationExecutor from "@foundations/MigrationExecutor"
+import Connection from "@components/database/Connection"
+import MigrationHelper from "@helpers/MigrationHelper"
+import OnlyNewMigrations from "@decorators/OnlyNewMigrations"
+
 
 export default abstract class MigrationsFilter extends MethodModel<MigrationExecutor, Promise<number>>
 {

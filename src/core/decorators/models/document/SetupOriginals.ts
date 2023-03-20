@@ -1,8 +1,12 @@
-import CollectionDocumentWriter from "../../../components/database/collections/CollectionDocumentWriter"
-import ModelSchema from "../../../data/interfaces/ModelSchema"
-import MethodModel from "../../../foundations/MethodModel"
-import clone from "../../../hooks/clone"
-import Model from "../../../Model"
+import ModelSchema from "@data/interfaces/ModelSchema"
+
+import MethodModel from "@foundations/MethodModel"
+import CollectionDocumentWriter from "@components/database/collections/CollectionDocumentWriter"
+
+import clone from "@hooks/clone"
+
+import Model from "@core/Model"
+
 
 export default class SetupOriginals<Schema extends ModelSchema> extends MethodModel<CollectionDocumentWriter<Schema>, Promise<boolean>, [model: Model<Schema>]>
 {

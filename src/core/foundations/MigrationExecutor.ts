@@ -1,8 +1,11 @@
-import EmptyMigrationException from "../../exceptions/EmptyMigrationException"
-import MigrationManager from "../components/MigrationManager"
-import { MigrationConstructor } from "../data/types/MigrationConstructor"
-import { Nullable } from "../data/types/Nullable"
-import MigrationCommand from "./MigrationCommand"
+import { MigrationConstructor } from "@data/types/MigrationConstructor"
+import { Nullable } from "@data/types/Nullable"
+
+import MigrationCommand from "@foundations/MigrationCommand"
+import MigrationManager from "@components/MigrationManager"
+
+import EmptyMigrationException from "@exceptions/EmptyMigrationException"
+
 
 export default abstract class MigrationExecutor extends MigrationCommand
 {

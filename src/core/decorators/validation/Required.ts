@@ -1,12 +1,15 @@
-import { Keyof } from "../../data/types/Keyof"
-import BaseModel from "../../foundations/BaseModel"
-import MethodModel from "../../foundations/MethodModel"
-import Validation, { ValidationData } from "../../foundations/Validation"
-import NeastedObjectHelper from "../../helpers/NeastedObjectHelper"
-import assert from "../../hooks/assert"
-import defined from "../../hooks/defined"
+import { Keyof } from "@data/types/Keyof"
 
-export default class Required<Schema, Data extends ValidationData> extends MethodModel<Validation<Schema, Data>, Promise<void>, [model: BaseModel<Schema>, attribute: Keyof<Schema>]>
+import BaseModel from "@foundations/BaseModel"
+import MethodModel from "@foundations/MethodModel"
+import Validation, { ValidationData } from "@foundations/Validation"
+import NeastedObjectHelper from "@helpers/NeastedObjectHelper"
+
+import assert from "@hooks/assert"
+import defined from "@hooks/defined"
+
+
+export default class Required<Schema, Data extends ValidationData<Schema>> extends MethodModel<Validation<Schema, Data>, Promise<void>, [model: BaseModel<Schema>, attribute: Keyof<Schema>]>
 {
     public async method(this: Validation<Schema, Data>, { original, validateRequired }: Required<Schema, Data>, model: BaseModel<Schema>, attribute: Keyof<Schema>): Promise<void>
     {

@@ -1,7 +1,13 @@
-import Cli from "../src/Cli"
-import { Console } from "../src/core/data/enums/Console"
-import TestThrowException from "../src/exceptions/TestThrowException"
-import { data } from "./_data"
+import { Console } from "@data/enums/Console"
+
+import TestThrowException from "@exceptions/TestThrowException"
+
+import Cli from "@cli"
+
+
+const data = {
+    log: jest.spyOn(console, "log")
+}
 
 beforeEach(() => {
     data.log = jest.spyOn(console, "log")

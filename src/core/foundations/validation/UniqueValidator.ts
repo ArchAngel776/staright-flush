@@ -1,43 +1,53 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Filter } from "mongodb"
-import CollectionNameException from "../../../exceptions/CollectionNameException"
-import Connection from "../../components/database/Connection"
-import { String } from "../../data/enums/String"
-import { Constructor } from "../../data/types/Constructor"
-import FilterUniqueModel from "../../decorators/validation/FilterUniqueModel"
-import Method from "../../helpers/Method"
-import format from "../../hooks/format"
-import Model from "../../Model"
-import Validator from "../../Validator"
+import type { Document, Filter } from "mongodb"
 
-export default class UniqueValidator<Schema> extends Validator<Schema, boolean | string>
+import { String } from "@data/enums/String"
+import { Constructor } from "@data/types/Constructor"
+import { Keyof } from "@data/types/Keyof"
+import type { UniqueValue } from "@data/types/UniqueValue"
+
+import BaseModel from "@foundations/BaseModel"
+import Connection from "@components/database/Connection"
+import Method from "@helpers/Method"
+import Unique from "@helpers/Unique"
+import FilterUniqueModel from "@decorators/validation/FilterUniqueModel"
+import UniqueValidatorModel from "@decorators/validation/UniqueValidatorModel"
+
+import format from "@hooks/format"
+
+import Validator from "@core/Validator"
+
+
+export default class UniqueValidator<Schema> extends Validator<Schema, UniqueValue>
 {
+    protected readonly connection: Connection
+
     protected collection: string = String.EMPTY
 
-    public async validate(value: boolean | string): Promise<boolean>
+    public constructor(model: BaseModel<Schema>, attribute: Keyof<Schema>)
     {
-        if (typeof value === "boolean" && value) {
-            if (!(this.model instanceof Model)) {
-                throw new CollectionNameException
-            }
-            this.collection = this.model.collection()
+        super(model, attribute)
+        this.connection = Connection.getConnection()
+    }
+
+    @Method(<Constructor<UniqueValidatorModel<Schema>>> UniqueValidatorModel)
+    public async validate(value: UniqueValue): Promise<boolean>
+    {
+        if (value instanceof Unique) {
+            this.collection = value.getModel().collection()
+            const attribute = value.keyPath || this.attributeName
+
+            return this.checkDatabase({
+                [attribute]: this.getProperty()
+            })
         }
-        else if (typeof value === "string") {
-            this.collection = value
-        }
-        else {
-            return true
-        }
-        
-        return !await Connection.getConnection().make(db => db.collection(this.collection).countDocuments(this.filter()))
+        return true
     }
 
     @Method(<Constructor<FilterUniqueModel<Schema>>> FilterUniqueModel)
-    protected filter(): Filter<Schema>
+    protected async checkDatabase(filter: Filter<Document>): Promise<boolean>
     {
-        const filter: Partial<Schema> = {}
-        filter[this.attributeName as keyof Schema] = this.getProperty()
-        return filter
+        return await this.connection.make(database => database.collection(this.collection).countDocuments(filter)) === 0
     }
 
     public getErrorMessage(): string

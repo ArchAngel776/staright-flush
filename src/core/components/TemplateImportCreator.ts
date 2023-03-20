@@ -1,4 +1,5 @@
-import { Import } from "../data/types/Import"
+import { Import } from "@data/types/Import"
+
 
 export default class TemplateImportCreator
 {

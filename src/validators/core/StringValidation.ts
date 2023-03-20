@@ -1,15 +1,19 @@
-import { Validators } from "../../core/data/interfaces/Validators"
-import Validation, { ValidationData } from "../../core/foundations/Validation"
-import merge from "../../core/hooks/merge"
-import MaxValidator from "./string/MaxValidator"
-import MinValidator from "./string/MinValidator"
-import LengthValidator from "./string/LengthValidator"
-import PatternValidator from "./string/PatternValidator"
-import BaseModel from "../../core/foundations/BaseModel"
-import { Keyof } from "../../core/data/types/Keyof"
-import NeastedObjectHelper from "../../core/helpers/NeastedObjectHelper"
+import { Validators } from "@data/interfaces/Validators"
+import { Keyof } from "@data/types/Keyof"
 
-export interface StringValidationData extends ValidationData
+import BaseModel from "@foundations/BaseModel"
+import Validation, { ValidationData } from "@foundations/Validation"
+import NeastedObjectHelper from "@helpers/NeastedObjectHelper"
+
+import merge from "@hooks/merge"
+
+import MaxValidator from "@validators/core/string/MaxValidator"
+import MinValidator from "@validators/core/string/MinValidator"
+import LengthValidator from "@validators/core/string/LengthValidator"
+import PatternValidator from "@validators/core/string/PatternValidator"
+
+
+export interface StringValidationData<Schema> extends ValidationData<Schema>
 {
     min: number
     max: number
@@ -17,9 +21,9 @@ export interface StringValidationData extends ValidationData
     pattern: RegExp
 }
 
-export default class StringValidation<Schema> extends Validation<Schema, StringValidationData>
+export default class StringValidation<Schema> extends Validation<Schema, StringValidationData<Schema>>
 {
-    public validators(): Validators<Schema, StringValidationData>
+    public validators(): Validators<Schema, StringValidationData<Schema>>
     {
         return merge(super.validators(), {
             min: MinValidator,

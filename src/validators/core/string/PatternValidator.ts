@@ -1,18 +1,30 @@
-import { AsyncAwait } from "../../../core/data/types/AsyncAwait"
-import format from "../../../core/hooks/format"
-import Validator from "../../../core/Validator"
+import format from "@hooks/format"
 
-export default class PatternValidator<Schema> extends Validator<Schema, RegExp>
+import ValidatorSignature from "@decorators/signatures/ValidatorSignature"
+
+import Validator from "@core/Validator"
+
+
+@ValidatorSignature()
+export default class PatternValidator<Schema> extends Validator<Schema, RegExp, string>
 {
-    public validate(value: RegExp): AsyncAwait<boolean>
+    protected pattern!: RegExp
+
+    public init(pattern: RegExp): void
     {
-        return value.test(this.getProperty())
+        this.pattern = pattern
+    }
+
+    public validate(pattern: RegExp): boolean
+    {
+        return pattern.test(this.getProperty())
     }
 
     public getErrorMessage(): string
     {
-        return format("Property {attribute} must match specified pattern", {
-            attribute: this.attributeName
+        return format("Property {attribute} must match specified pattern {pattern}", {
+            attribute: this.attributeName,
+            pattern: this.pattern.toString()
         })
     }
 }

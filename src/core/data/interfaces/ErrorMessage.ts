@@ -1,4 +1,4 @@
 export type ErrorMessage<Data> =
 {
-    [property in keyof Data]?: string | undefined
+    [Prop in keyof Data]?: string | undefined
 }

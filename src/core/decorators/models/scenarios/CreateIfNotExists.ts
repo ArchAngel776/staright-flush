@@ -1,6 +1,8 @@
-import ValidationScenarios from "../../../components/ValidationScenarios"
-import { Keyof } from "../../../data/types/Keyof"
-import MethodModel from "../../../foundations/MethodModel"
+import { Keyof } from "@data/types/Keyof"
+
+import MethodModel from "@foundations/MethodModel"
+import ValidationScenarios from "@components/ValidationScenarios"
+
 
 export default class CreateIfNotExists<Schema> extends MethodModel<ValidationScenarios<Schema>, ValidationScenarios<Schema>, [attribute: Keyof<Schema>, message: string]>
 {

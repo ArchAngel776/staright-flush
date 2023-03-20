@@ -1,4 +1,5 @@
-import MigrationsFilter from "../foundations/decorators/MigrationsFilter"
+import MigrationsFilter from "@foundations/decorators/MigrationsFilter"
+
 
 export default class OnlyNewMigrations extends MigrationsFilter
 {

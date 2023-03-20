@@ -1,9 +1,12 @@
-import ExistsBooleanValueException from "../../../../exceptions/query/ExistsBooleanValueException"
-import ModelSchema from "../../../data/interfaces/ModelSchema"
-import QueryValueFactory from "../../../data/interfaces/QueryValueFactory"
-import { QueryValueType } from "../../../data/types/QueryValueType"
-import QueryValueExpression from "../../../foundations/query/QueryValueExpression"
-import QueryExistsExpression from "../../../helpers/query/values/exists/QueryExistsExpression"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import QueryValueFactory from "@data/interfaces/QueryValueFactory"
+import { QueryValueType } from "@data/types/QueryValueType"
+
+import QueryValueExpression from "@foundations/query/QueryValueExpression"
+import QueryExistsExpression from "@helpers/query/values/exists/QueryExistsExpression"
+
+import ExistsBooleanValueException from "@exceptions/query/ExistsBooleanValueException"
+
 
 export default class QueryExistsFactory<Schema extends ModelSchema> implements QueryValueFactory<Schema>
 {

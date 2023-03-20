@@ -1,9 +1,13 @@
-import ComparisonNanNumberException from "../../../exceptions/query/ComparisonNanNumberException"
-import ModelSchema from "../../data/interfaces/ModelSchema"
-import QueryValueFactory from "../../data/interfaces/QueryValueFactory"
-import MethodModel from "../../foundations/MethodModel"
-import QueryValueExpression from "../../foundations/query/QueryValueExpression"
-import assert from "../../hooks/assert"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import QueryValueFactory from "@data/interfaces/QueryValueFactory"
+
+import MethodModel from "@foundations/MethodModel"
+import QueryValueExpression from "@foundations/query/QueryValueExpression"
+
+import assert from "@hooks/assert"
+
+import ComparisonNanNumberException from "@exceptions/query/ComparisonNanNumberException"
+
 
 export default class ExcludeNanComparison<Schema extends ModelSchema> extends MethodModel<QueryValueFactory<Schema>, QueryValueExpression<Schema>, [value: number]>
 {

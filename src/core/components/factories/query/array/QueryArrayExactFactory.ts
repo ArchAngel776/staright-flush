@@ -1,9 +1,12 @@
-import QuerySingleValueException from "../../../../../exceptions/query/QuerySingleValueException"
-import ModelSchema from "../../../../data/interfaces/ModelSchema"
-import QueryArrayValueFactory from "../../../../data/interfaces/QueryArrayValueFactory"
-import { QueryArrayValueType } from "../../../../data/types/QueryArrayValueType"
-import QueryArrayValueExpression from "../../../../foundations/query/QueryArrayValueExpression"
-import QueryArrayExactExpression from "../../../../helpers/query/array/exact/QueryArrayExactExpression"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import QueryArrayValueFactory from "@data/interfaces/QueryArrayValueFactory"
+import { QueryArrayValueType } from "@data/types/QueryArrayValueType"
+
+import QueryArrayValueExpression from "@foundations/query/QueryArrayValueExpression"
+import QueryArrayExactExpression from "@helpers/query/array/exact/QueryArrayExactExpression"
+
+import QuerySingleValueException from "@exceptions/query/QuerySingleValueException"
+
 
 export default class QueryArrayExactFactory<Schema extends ModelSchema> implements QueryArrayValueFactory<Schema>
 {

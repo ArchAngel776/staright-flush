@@ -1,9 +1,13 @@
+import { Config } from "jest"
+import { pathsToModuleNameMapper } from "ts-jest"
+import { compilerOptions } from "./tsconfig.json"
+
 /*
  * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/configuration
  */
 
-export default {
+const config: Config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -31,7 +35,7 @@ export default {
   // ],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "v8",
+  coverageProvider: "babel",
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -88,10 +92,12 @@ export default {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: "<rootDir>" }),
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
-  // modulePathIgnorePatterns: [],
+  modulePathIgnorePatterns: [
+    "<rootDir>/client"
+  ],
 
   // Activates notifications for test results
   // notify: false,
@@ -121,7 +127,7 @@ export default {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  rootDir: "tests",
+  // rootDir: "tests",
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
@@ -132,7 +138,7 @@ export default {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  //setupFiles: [],
+  // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
@@ -193,3 +199,5 @@ export default {
   // Whether to use watchman for file crawling
   // watchman: true,
 }
+
+export default config

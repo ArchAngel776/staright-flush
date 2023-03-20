@@ -1,9 +1,11 @@
-import ModelSchema from "../../../data/interfaces/ModelSchema"
-import QueryValueFactory from "../../../data/interfaces/QueryValueFactory"
-import { QueryValueType } from "../../../data/types/QueryValueType"
-import QueryValueExpression from "../../../foundations/query/QueryValueExpression"
-import QueryNotEqualExpression from "../../../helpers/query/values/not/QueryNotEqualExpression"
-import QueryNotInExpression from "../../../helpers/query/values/not/QueryNotInExpression"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import QueryValueFactory from "@data/interfaces/QueryValueFactory"
+import { QueryValueType } from "@data/types/QueryValueType"
+
+import QueryValueExpression from "@foundations/query/QueryValueExpression"
+import QueryNotEqualExpression from "@helpers/query/values/not/QueryNotEqualExpression"
+import QueryNotInExpression from "@helpers/query/values/not/QueryNotInExpression"
+
 
 export default class QueryNotFactory<Schema extends ModelSchema> implements QueryValueFactory<Schema>
 {

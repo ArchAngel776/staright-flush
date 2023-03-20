@@ -1,6 +1,9 @@
-import { ClientSession, Collection, Db, Document, IndexSpecification } from "mongodb"
-import { Multi } from "./data/types/Multi"
-import multi from "./hooks/multi"
+import { ClientSession, Collection, Db, Document } from "mongodb"
+
+import { Multi } from "@data/types/Multi"
+
+import multi from "@hooks/multi"
+
 
 export default abstract class Migration
 {
@@ -47,10 +50,7 @@ export default abstract class Migration
 
     public createIndex(name: string, collection: string, fields: Multi<string>, unique = false): Promise<string>
     {
-        const index: IndexSpecification = {}
-        multi(fields).forEach(field => index[field] = Migration.INDEX_FIELD)
-
-        return this.database.collection(collection).createIndex(index, {
+        return this.database.collection(collection).createIndex(multi(fields), {
             name, unique,
             session: this.session
         })

@@ -1,24 +1,26 @@
-import Scenario from "../../../core/data/interfaces/Scenario"
-import { ValidationSchema } from "../../../core/data/interfaces/ValidationSchema"
-import { Keyof } from "../../../core/data/types/Keyof"
-import format from "../../../core/hooks/format"
-import Validator from "../../../core/Validator"
+import { ValidationSchema } from "@data/interfaces/ValidationSchema"
+import { Keyof } from "@data/types/Keyof"
 
+import ValidatorSignature from "@decorators/signatures/ValidatorSignature"
+
+import format from "@hooks/format"
+
+import Validator from "@core/Validator"
+
+
+@ValidatorSignature()
 export default class SchemaValidator<Schema> extends Validator<Schema, ValidationSchema<Schema>>
 {
-    public async validate(value: ValidationSchema<Schema>): Promise<boolean>
+    public async validate(schema: ValidationSchema<Schema>): Promise<boolean>
     {
-        for (const property in value) {
-            const validation = value[property] as Scenario<Schema>
-
+        for (const property in schema) {
             try {
-                await validation.make(this.model, `${this.attribute}.${property}` as Keyof<Schema>)
+                await schema[property].make(this.model, `${this.attribute}.${property}` as Keyof<Schema>)
             }
             catch {
                 return false
             }
         }
-
         return true
     }
 

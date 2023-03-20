@@ -1,27 +1,33 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import UniqueValidator from "./validation/UniqueValidator"
-import { Validators } from "../data/interfaces/Validators"
-import { AsyncAwait } from "../data/types/AsyncAwait"
-import format from "../hooks/format"
-import BaseModel from "./BaseModel"
-import cast from "../hooks/cast"
-import Method from "../helpers/Method"
-import Required from "../decorators/validation/Required"
-import { Constructor } from "../data/types/Constructor"
-import RequiredValidator from "./validation/RequiredValidator"
-import Scenario from "../data/interfaces/Scenario"
-import defined from "../hooks/defined"
-import { ErrorMessage } from "../data/interfaces/ErrorMessage"
-import assert from "../hooks/assert"
-import { Keyof } from "../data/types/Keyof"
+import { Validators } from "@data/interfaces/Validators"
+import { AsyncAwait } from "@data/types/AsyncAwait"
+import { ErrorMessage } from "@data/interfaces/ErrorMessage"
+import Scenario from "@data/interfaces/Scenario"
+import { UniqueValue } from "@data/types/UniqueValue"
+import { Constructor } from "@data/types/Constructor"
+import type { Keyof } from "@data/types/Keyof"
 
-export interface ValidationData
+import BaseModel from "@foundations/BaseModel"
+import RequiredValidator from "@foundations/validation/RequiredValidator"
+import UniqueValidator from "@foundations/validation/UniqueValidator"
+import SameValidator from "@foundations/validation/SameValidator"
+import Method from "@helpers/Method"
+import Required from "@decorators/validation/Required"
+
+import assert from "@hooks/assert"
+import defined from "@hooks/defined"
+import cast from "@hooks/cast"
+import format from "@hooks/format"
+
+
+export interface ValidationData<Schema>
 {
     required: boolean
-    unique: boolean
+    unique: UniqueValue
+    sameAs: Keyof<Schema>
 }
 
-export default abstract class Validation<Schema, Data extends ValidationData> implements Scenario<Schema>
+export default abstract class Validation<Schema, Data extends ValidationData<Schema>> implements Scenario<Schema>
 {
     protected data: Partial<Data>
 
@@ -30,11 +36,12 @@ export default abstract class Validation<Schema, Data extends ValidationData> im
         this.data = data
     }
 
-    public validators(): Validators<Schema, ValidationData>
+    public validators(): Validators<Schema, ValidationData<Schema>>
     {
         return {
-            required: RequiredValidator,
-            unique: UniqueValidator
+            required:   RequiredValidator,
+            unique:     UniqueValidator,
+            sameAs:     SameValidator
         }
     }
 
@@ -55,7 +62,10 @@ export default abstract class Validation<Schema, Data extends ValidationData> im
             const Validator = validators[property]
             const validator = new Validator(model, attribute)
 
-            const value = <Data[keyof Data]> this.data[property]
+            const value = this.data[property]
+            if (!value) {
+                continue
+            }
 
             assert(await validator.validate(value), format(this.getCustomError(property) || validator.getErrorMessage(), {
                 attribute: <string> attribute

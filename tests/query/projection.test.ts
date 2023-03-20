@@ -1,5 +1,7 @@
-import { ProjectionArray } from "../../src/core/data/enums/ProjectionArray"
+import { ProjectionArray } from "@data/enums/ProjectionArray"
+
 import { matchProjection, query } from "./_data"
+
 
 afterEach(() => query.clearProjection())
 

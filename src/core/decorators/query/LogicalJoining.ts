@@ -1,11 +1,15 @@
 import { Filter, RootFilterOperators } from "mongodb"
-import QueryBuilder from "../../components/builders/QueryBuilder"
-import { QueryLogical } from "../../data/enums/QueryLogical"
-import ModelSchema from "../../data/interfaces/ModelSchema"
-import { FunctionArguments } from "../../data/types/FunctionArguments"
-import MethodModel from "../../foundations/MethodModel"
-import defined from "../../hooks/defined"
-import empty from "../../hooks/empty"
+
+import { QueryLogical } from "@data/enums/QueryLogical"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import { FunctionArguments } from "@data/types/FunctionArguments"
+
+import MethodModel from "@foundations/MethodModel"
+import QueryBuilder from "@components/builders/QueryBuilder"
+
+import defined from "@hooks/defined"
+import empty from "@hooks/empty"
+
 
 export default class LogicalJoining<Schema extends ModelSchema> extends MethodModel<QueryBuilder<Schema>, QueryBuilder<Schema>, FunctionArguments>
 {

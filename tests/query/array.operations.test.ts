@@ -1,5 +1,7 @@
-import { QueryArrayOperator } from "../../src/core/data/enums/QueryArrayOperator"
+import { QueryArrayOperator } from "@data/enums/QueryArrayOperator"
+
 import { matchFilter } from "./_data"
+
 
 const date1 = new Date
 const date2 = new Date

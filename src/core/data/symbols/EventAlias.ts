@@ -1,0 +1,1 @@
+export const EventAlias = Symbol("event:alias")

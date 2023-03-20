@@ -1,11 +1,10 @@
-import express from "express"
+import app from "@route"
 
 const PORT = process.env.PORT || 3000
-const server = express()
 
-server.listen(PORT, () => 
+app.listen(PORT, () =>
 {
     console.log(`Server started at: ${PORT} port.`)
 })
 
-export default server
+export default app

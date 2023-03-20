@@ -1,30 +1,39 @@
-import { ClientSession, OperationOptions } from "mongodb"
-import Connection from "../components/database/Connection"
-import { Nullable } from "../data/types/Nullable"
+import { OperationOptions } from "mongodb"
+
+import DatabaseOperation from "@data/callbacks/DatabaseOperation"
+import { TransactionData } from "@data/types/TransactionData"
+
+import TransactionDataHelper from "@helpers/TransactionDataHelper"
+import Connection from "@components/database/Connection"
+
 
 export default class CollectionDocument
 {
     protected readonly connection: Connection
 
-    protected session: Nullable<ClientSession>
+    protected transaction: TransactionDataHelper | undefined
 
     public constructor()
     {
         this.connection = Connection.getConnection()
-        this.session = null
     }
 
-    public withSession(session: Nullable<ClientSession>): this
+    public withSession(transaction?: TransactionData): this
     {
-        this.session = session
+        this.transaction = transaction ? new TransactionDataHelper(...transaction) : transaction
         return this
+    }
+
+    protected make<Result>(operation: DatabaseOperation<Result>): Promise<Result>
+    {
+        return this.transaction ? operation(this.transaction.database) : this.connection.make(operation)
     }
 
     protected getOptions(): OperationOptions
     {
         const options: OperationOptions = {}
-        if (this.session) {
-            options.session = this.session
+        if (this.transaction) {
+            options.session = this.transaction.session
         }
         return options
     }

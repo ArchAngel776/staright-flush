@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import ComparisonNumberTypeException from "../../../../exceptions/query/ComparisonNumberTypeException"
-import ModelSchema from "../../../data/interfaces/ModelSchema"
-import QueryValueFactory from "../../../data/interfaces/QueryValueFactory"
-import { Constructor } from "../../../data/types/Constructor"
-import { QueryValueType } from "../../../data/types/QueryValueType"
-import ExcludeNanComparison from "../../../decorators/query/ExcludeNanComparison"
-import QueryValueExpression from "../../../foundations/query/QueryValueExpression"
-import Method from "../../../helpers/Method"
-import QueryGreaterEqualExpression from "../../../helpers/query/values/greater/QueryGreaterEqualExpression"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import QueryValueFactory from "@data/interfaces/QueryValueFactory"
+import { Constructor } from "@data/types/Constructor"
+import type { QueryValueType } from "@data/types/QueryValueType"
+
+import QueryValueExpression from "@foundations/query/QueryValueExpression"
+import QueryGreaterEqualExpression from "@helpers/query/values/greater/QueryGreaterEqualExpression"
+import Method from "@helpers/Method"
+import ExcludeNanComparison from "@decorators/query/ExcludeNanComparison"
+
+import ComparisonNumberTypeException from "@exceptions/query/ComparisonNumberTypeException"
+
 
 export default class QueryGreaterEqualFactory<Schema extends ModelSchema> implements QueryValueFactory<Schema>
 {

@@ -1,10 +1,14 @@
 import { ClientSession, Db } from "mongodb"
-import Connection from "./database/Connection"
-import DatabaseSessionOperation from "../data/callbacks/DatabaseSessionOperation"
-import { MigrationConstructor } from "../data/types/MigrationConstructor"
-import print from "../hooks/print"
-import getError from "../hooks/getError"
-import MigrationHelper from "../helpers/MigrationHelper"
+
+import DatabaseSessionOperation from "@data/callbacks/DatabaseSessionOperation"
+import { MigrationConstructor } from "@data/types/MigrationConstructor"
+
+import Connection from "@components/database/Connection"
+import MigrationHelper from "@helpers/MigrationHelper"
+
+import print from "@hooks/print"
+import getError from "@hooks/getError"
+
 
 export default class MigrationManager
 {

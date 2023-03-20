@@ -1,7 +1,10 @@
 import { BSONType } from "mongodb"
-import { QueryArrayOperator } from "../../src/core/data/enums/QueryArrayOperator"
-import { QueryOperator } from "../../src/core/data/enums/QueryOperator"
+
+import { QueryArrayOperator } from "@data/enums/QueryArrayOperator"
+import { QueryOperator } from "@data/enums/QueryOperator"
+
 import { matchFilter } from "./_data"
+
 
 describe("Simple negation", () =>
 {

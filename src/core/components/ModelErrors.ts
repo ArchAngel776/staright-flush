@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Constructor } from "../data/types/Constructor"
-import { Keyof } from "../data/types/Keyof"
-import { ModelErrorsData } from "../data/types/ModelErrorsData"
-import { ModelFirstErrorsData } from "../data/types/ModelFirstErrorsData"
-import CreateIfNotExists from "../decorators/models/errors/CreateIfNotExists"
-import Method from "../helpers/Method"
-import empty from "../hooks/empty"
+import { Constructor } from "@data/types/Constructor"
+import { ModelErrorsData } from "@data/types/ModelErrorsData"
+import { ModelFirstErrorsData } from "@data/types/ModelFirstErrorsData"
+import type { Keyof } from "@data/types/Keyof"
+
+import Method from "@helpers/Method"
+import CreateIfNotExists from "@decorators/models/errors/CreateIfNotExists"
+
+import empty from "@hooks/empty"
+
 
 export default class ModelErrors<Schema>
 {
@@ -56,6 +59,12 @@ export default class ModelErrors<Schema>
     public getFirstErrorProperty(): Keyof<Schema> | undefined
     {
         return this.getErrorsProperties().shift()
+    }
+
+    public getFirstErrorFromAll(): string | undefined
+    {
+        const property = this.getFirstErrorProperty()
+        return property ? this.getFirstError(property) : undefined
     }
 
     @Method(<Constructor<CreateIfNotExists<Schema>>> CreateIfNotExists)

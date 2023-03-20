@@ -22,7 +22,7 @@ module.exports = class Migration_02_10_2022_002307_users extends Migration
 				},
 				user: {
 					bsonType: "object",
-					required: ["name"],
+					required: ["name", "email"],
 					properties: {
 						name: {
 							bsonType: "string",
@@ -31,7 +31,7 @@ module.exports = class Migration_02_10_2022_002307_users extends Migration
 						email: {
 							bsonType: "string",
 							//pattern: "^[a-zA-Z0-9\\.\\!\\#\\$\\%\\&\\'\\*\\+\\/\\=\\?\\^\\_\\`\\{\\|\\}\\~\\-]+@[a-zA-Z0-9\\-]+(?:\.[a-zA-Z0-9\\-]+)*$",
-							description: "Email field must be valid email address"
+							description: "User.Email field must be valid email address"
 						}
 					},
 					additionalProperties: false,
@@ -43,7 +43,7 @@ module.exports = class Migration_02_10_2022_002307_users extends Migration
 					properties: {
 						hash: {
 							bsonType: "string",
-							description: "Password hash must be valid string type"
+							description: "Password.Hash must be valid string type"
 						}
 					},
 					additionalProperties: false,
@@ -52,6 +52,18 @@ module.exports = class Migration_02_10_2022_002307_users extends Migration
 				active: {
 					bsonType: "bool",
 					description: "Field 'active' hash must be valid boolean type"
+				},
+				consents: {
+					bsonType: "object",
+					required: ["terms"],
+					properties: {
+						terms: {
+							bsonType: "string",
+							description: "Terms acceptation must be represented by string"
+						}
+					},
+					additionalProperties: false,
+					description: "Consents must be a valid object type"
 				},
 				timestamps: {
 					bsonType: "object",

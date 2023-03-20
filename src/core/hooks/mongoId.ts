@@ -1,5 +1,7 @@
 import { ObjectId } from "mongodb"
-import { ModelID } from "../data/types/ModelID"
+
+import { ModelID } from "@data/types/ModelID"
+
 
 export default function mongoId(id: ModelID): ObjectId | undefined
 {

@@ -1,19 +1,23 @@
-import { Validators } from "../../core/data/interfaces/Validators"
-import { Keyof } from "../../core/data/types/Keyof"
-import BaseModel from "../../core/foundations/BaseModel"
-import Validation, { ValidationData } from "../../core/foundations/Validation"
-import NeastedObjectHelper from "../../core/helpers/NeastedObjectHelper"
-import merge from "../../core/hooks/merge"
-import AlwaysValidator from "./boolean/AlwaysValidator"
+import { Validators } from "@data/interfaces/Validators"
+import { Keyof } from "@data/types/Keyof"
 
-export interface BooleanValidationData extends ValidationData
+import BaseModel from "@foundations/BaseModel"
+import Validation, { ValidationData } from "@foundations/Validation"
+import NeastedObjectHelper from "@helpers/NeastedObjectHelper"
+
+import merge from "@hooks/merge"
+
+import AlwaysValidator from "@validators/core/boolean/AlwaysValidator"
+
+
+export interface BooleanValidationData<Schema> extends ValidationData<Schema>
 {
     always: boolean
 }
 
-export default class BooleanValidation<Schema> extends Validation<Schema, BooleanValidationData>
+export default class BooleanValidation<Schema> extends Validation<Schema, BooleanValidationData<Schema>>
 {
-    public validators(): Validators<Schema, BooleanValidationData>
+    public validators(): Validators<Schema, BooleanValidationData<Schema>>
     {
         return merge(super.validators(), {
             always: AlwaysValidator

@@ -1,14 +1,16 @@
 import { BSONType, BSONTypeAlias, Filter, FilterOperators } from "mongodb"
-import QueryCallback from "../callbacks/QueryCallback"
-import { ProjectionArray } from "../enums/ProjectionArray"
-import { QueryArrayOperator } from "../enums/QueryArrayOperator"
-import { QueryOperator } from "../enums/QueryOperator"
-import { KeyofModel } from "../types/KeyofModel"
-import { MongoFunctionExpression } from "../types/MongoFunctionExpression"
-import { Multi } from "../types/Multi"
-import { ProjectionData,ProjectionMatchDataValue, ProjectionSliceDataValue } from "../types/ProjectionData"
-import { ValueofModel } from "../types/ValueofModel"
-import ModelSchema from "./ModelSchema"
+
+import QueryCallback from "@data/callbacks/QueryCallback"
+import { ProjectionArray } from "@data/enums/ProjectionArray"
+import { QueryArrayOperator } from "@data/enums/QueryArrayOperator"
+import { QueryOperator } from "@data/enums/QueryOperator"
+import { KeyofModel } from "@data/types/KeyofModel"
+import { MongoFunctionExpression } from "@data/types/MongoFunctionExpression"
+import { Multi } from "@data/types/Multi"
+import { ProjectionData,ProjectionMatchDataValue, ProjectionSliceDataValue } from "@data/types/ProjectionData"
+import { ValueofModel } from "@data/types/ValueofModel"
+import ModelSchema from "@data/interfaces/ModelSchema"
+
 
 export default interface QueryBuilderInterface<Schema extends ModelSchema>
 {

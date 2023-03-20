@@ -1,5 +1,6 @@
-import ModelSchema from "../interfaces/ModelSchema"
-import QueryBuilderInterface from "../interfaces/QueryBuilderInterface"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import QueryBuilderInterface from "@data/interfaces/QueryBuilderInterface"
+
 
 export default interface QueryCallback<Schema extends ModelSchema>
 {

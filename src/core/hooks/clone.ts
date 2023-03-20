@@ -1,4 +1,5 @@
-import isRecord from "./isRecord"
+import isRecord from "@hooks/isRecord"
+
 
 export default function clone<Target>(target: Target): Target
 {

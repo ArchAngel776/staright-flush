@@ -1,8 +1,10 @@
-import CodeNeaster from "./components/CodeNeaster"
-import TemplateImportCreator from "./components/TemplateImportCreator"
-import TemplateParams from "./data/interfaces/TemplateParams"
-import { CodePart } from "./data/types/CodePart"
-import { Import } from "./data/types/Import"
+import TemplateParams from "@data/interfaces/TemplateParams"
+import { CodePart } from "@data/types/CodePart"
+import { Import } from "@data/types/Import"
+
+import CodeNeaster from "@components/CodeNeaster"
+import TemplateImportCreator from "@components/TemplateImportCreator"
+
 
 export default abstract class Template
 {

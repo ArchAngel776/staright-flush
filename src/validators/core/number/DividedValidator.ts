@@ -1,20 +1,30 @@
-import format from "../../../core/hooks/format"
-import Validator from "../../../core/Validator"
+import ValidatorSignature from "@decorators/signatures/ValidatorSignature"
 
-export default class DividedValidator<Schema> extends Validator<Schema, number>
+import format from "@hooks/format"
+
+import Validator from "@core/Validator"
+
+
+@ValidatorSignature()
+export default class DividedValidator<Schema> extends Validator<Schema, number, number>
 {
-    protected value = 0
+    protected divider!: number
 
-    public validate(value: number): boolean
+    public init(divider: number): void
     {
-        return this.getProperty<number>() % (this.value = value) === 0
+        this.divider = divider
+    }
+
+    public validate(divider: number): boolean
+    {
+        return this.getProperty() % divider === 0
     }
 
     public getErrorMessage(): string
     {
         return format("Property {attribute} must be divided by {divider}", {
             attribute: this.attributeName,
-            divider: this.value.toString()
+            divider: this.divider.toString()
         })
     }
 }

@@ -1,9 +1,12 @@
-import QueryTypeValueException from "../../../../exceptions/QueryTypeValueException"
-import ModelSchema from "../../../data/interfaces/ModelSchema"
-import QueryValueFactory from "../../../data/interfaces/QueryValueFactory"
-import { QueryValueType } from "../../../data/types/QueryValueType"
-import QueryValueExpression from "../../../foundations/query/QueryValueExpression"
-import QueryTypeExpression from "../../../helpers/query/values/type/QueryTypeExpression"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import QueryValueFactory from "@data/interfaces/QueryValueFactory"
+import { QueryValueType } from "@data/types/QueryValueType"
+
+import QueryValueExpression from "@foundations/query/QueryValueExpression"
+import QueryTypeExpression from "@helpers/query/values/type/QueryTypeExpression"
+
+import QueryTypeValueException from "@exceptions/QueryTypeValueException"
+
 
 export default class QueryTypeFactory<Schema extends ModelSchema> implements QueryValueFactory<Schema>
 {

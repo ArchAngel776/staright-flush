@@ -1,6 +1,10 @@
-import { ClientSession, Db, ObjectId } from "mongodb"
-import Connection from "../components/database/Connection"
-import { MigrationConstructor } from "../data/types/MigrationConstructor"
+import { ClientSession, Db, Filter, ObjectId } from "mongodb"
+
+import MigrationSchema from "@data/interfaces/MigrationSchema"
+import { MigrationConstructor } from "@data/types/MigrationConstructor"
+
+import Connection from "@components/database/Connection"
+
 
 export default class MigrationHelper
 {
@@ -10,7 +14,7 @@ export default class MigrationHelper
 
     protected session: ClientSession
 
-    protected connection: Connection
+    protected readonly connection: Connection
 
     public constructor(db: Db, session: ClientSession)
     {
@@ -31,7 +35,7 @@ export default class MigrationHelper
         return new Migration(this.db, this.session).revert()
     }
 
-    protected newMigrationData(Migration: MigrationConstructor)
+    protected newMigrationData(Migration: MigrationConstructor): MigrationSchema
     {
         return {
             _id: new ObjectId,
@@ -40,7 +44,7 @@ export default class MigrationHelper
         }
     }
 
-    protected existsMigrationData(Migration: MigrationConstructor)
+    protected existsMigrationData(Migration: MigrationConstructor): Filter<MigrationSchema>
     {
         return { migration_name: Migration.name }
     }

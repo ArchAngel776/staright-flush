@@ -1,8 +1,10 @@
 import { Filter, FilterOperators } from "mongodb"
-import { Projection } from "../enums/Projection"
-import { KeyofModel } from "./KeyofModel"
-import { ValueofModel } from "./ValueofModel"
-import ModelSchema from "../interfaces/ModelSchema"
+
+import ModelSchema from "@data/interfaces/ModelSchema"
+import { Projection } from "@data/enums/Projection"
+import { KeyofModel } from "@data/types/KeyofModel"
+import { ValueofModel } from "@data/types/ValueofModel"
+
 
 export type ProjectionMatchDataValue<Schema extends ModelSchema> = Filter<Schema> | FilterOperators<ValueofModel<Schema>>
 

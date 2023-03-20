@@ -1,7 +1,10 @@
-import ModelErrors from "../components/ModelErrors"
-import ValidationScenarios from "../components/ValidationScenarios"
-import { Scenarios } from "../data/interfaces/Scenarios"
-import getError from "../hooks/getError"
+import { Scenarios } from "@data/interfaces/Scenarios"
+
+import ModelErrors from "@components/ModelErrors"
+import ValidationScenarios from "@components/ValidationScenarios"
+
+import getError from "@hooks/getError"
+
 
 export default class BaseModel<Schema>
 {

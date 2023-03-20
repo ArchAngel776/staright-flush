@@ -1,8 +1,12 @@
-import CollectionDocumentReader from "../../../components/database/collections/CollectionDocumentReader"
-import ModelSchema from "../../../data/interfaces/ModelSchema"
-import MethodModel from "../../../foundations/MethodModel"
-import clone from "../../../hooks/clone"
-import Model from "../../../Model"
+import ModelSchema from "@data/interfaces/ModelSchema"
+
+import MethodModel from "@foundations/MethodModel"
+import CollectionDocumentReader from "@components/database/collections/CollectionDocumentReader"
+
+import clone from "@hooks/clone"
+
+import Model from "@core/Model"
+
 
 export default class LoadAllOriginals<Schema extends ModelSchema> extends MethodModel<CollectionDocumentReader<Schema>, Promise<Array<Model<Schema>>>, [model: Model<Schema>]>
 {

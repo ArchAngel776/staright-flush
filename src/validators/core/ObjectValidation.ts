@@ -1,20 +1,24 @@
-import { Validators } from "../../core/data/interfaces/Validators"
-import { Constructor } from "../../core/data/types/Constructor"
-import { Keyof } from "../../core/data/types/Keyof"
-import BaseModel from "../../core/foundations/BaseModel"
-import Validation, { ValidationData } from "../../core/foundations/Validation"
-import NeastedObjectHelper from "../../core/helpers/NeastedObjectHelper"
-import merge from "../../core/hooks/merge"
-import TypeofValidator from "./object/TypeofValidator"
+import { Validators } from "@data/interfaces/Validators"
+import { Constructor } from "@data/types/Constructor"
+import { Keyof } from "@data/types/Keyof"
 
-export interface ObjectValidationData extends ValidationData
+import BaseModel from "@foundations/BaseModel"
+import Validation, { ValidationData } from "@foundations/Validation"
+import NeastedObjectHelper from "@helpers/NeastedObjectHelper"
+
+import merge from "@hooks/merge"
+
+import TypeofValidator from "@validators/core/object/TypeofValidator"
+
+
+export interface ObjectValidationData<Schema> extends ValidationData<Schema>
 {
     typeof: Constructor
 }
 
-export default class ObjectValidation<Schema> extends Validation<Schema, ObjectValidationData>
+export default class ObjectValidation<Schema> extends Validation<Schema, ObjectValidationData<Schema>>
 {
-    public validators(): Validators<Schema, ObjectValidationData>
+    public validators(): Validators<Schema, ObjectValidationData<Schema>>
     {
         return merge(super.validators(), {
             typeof: TypeofValidator

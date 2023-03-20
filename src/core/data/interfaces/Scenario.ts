@@ -1,6 +1,8 @@
-import BaseModel from "../../foundations/BaseModel"
-import { AsyncAwait } from "../types/AsyncAwait"
-import { Keyof } from "../types/Keyof"
+import { AsyncAwait } from "@data/types/AsyncAwait"
+import { Keyof } from "@data/types/Keyof"
+
+import BaseModel from "@foundations/BaseModel"
+
 
 export default interface Scenario<Schema>
 {

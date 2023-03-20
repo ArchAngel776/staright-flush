@@ -1,7 +1,15 @@
-import server from "./index"
+import action from "@hooks/action"
+import validate from "@hooks/validate"
 
-server.get("/", (request, response) => 
-{
-    response.setHeader("content-type", "text/html;charset=utf-8")
-    response.send("<h1>Foo</h1>")
-})
+import RegisterAction from "@actions/RegisterAction"
+
+import RegisterRequest from "@requests/RegisterRequest"
+
+import app from "@app"
+
+
+//app.post("/login", action(LoginAction))
+
+app.post("/register", validate(RegisterRequest), action(RegisterAction))
+
+export default app

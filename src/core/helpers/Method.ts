@@ -1,8 +1,10 @@
-import Bin from "../data/interfaces/Bin"
-import { FunctionArguments } from "../data/types/FunctionArguments"
-import { MethodModelContructor } from "../data/types/MethodModelContructor"
-import MethodsBinder from "./MethodsBinder"
-import MethodsExtractor from "./MethodsExtractor"
+import Bin from "@data/interfaces/Bin"
+import { FunctionArguments } from "@data/types/FunctionArguments"
+import { MethodModelContructor } from "@data/types/MethodModelContructor"
+
+import MethodsBinder from "@helpers/MethodsBinder"
+import MethodsExtractor from "@helpers/MethodsExtractor"
+
 
 export default function Method<Target, Result, Arguments extends FunctionArguments, Params extends FunctionArguments>(MethodModel: MethodModelContructor<Target, Result, Arguments, Params>, ...args: Params)
 {

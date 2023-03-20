@@ -12,20 +12,13 @@ services:
     image: node:16.16.0
     restart: always
     ports:
-      - "80:3000"
+      - "80:${PORT}"
     volumes:
       - ./:/app
-    environment:
-      NODE_ENV: dev
-      PORT: 3000
-      DB_HOST: s1.database.straight-flush.pl,s2.database.straight-flush.pl,sa.database.straight-flush.pl
-      DB_PORT: 27017
-      DB_USER: straight-flush
-      DB_PASS: password
-      DB_NAME: straight-flush
-      DB_REPL: rsStraightFlush
+    env_file:
+      - .env
     working_dir: /app
-    command: node build/index.js
+    command: yarn dev
     depends_on:
       - db-primary
       - db-secondary
@@ -33,7 +26,7 @@ services:
     networks:
       net-straight-flush:
         aliases:
-          - www.straight-flush.pl
+          - ${HOST}
 
   db-primary:
     container_name: straight-flush-database-primary
@@ -42,11 +35,14 @@ services:
       dockerfile: Dockerfile.mongo
     restart: always
     environment:
-      MONGO_ADMIN_NAME: admin
-      MONGO_ADMIN_PASS: password
-      MONGO_APP_USER_NAME: straight-flush
-      MONGO_APP_USER_PASSWORD: password
-      MONGO_INITDB_DATABASE: straight-flush
+      MONGO_ADMIN_NAME:           admin
+      MONGO_ADMIN_PASS:           password
+      MONGO_APP_USER_NAME:        straight-flush
+      MONGO_APP_USER_PASSWORD:    password
+      MONGO_TEST_USER_NAME:       straight-flush-test
+      MONGO_TEST_USER_PASSWORD:   password
+      MONGO_INITDB_DATABASE:      straight-flush
+      MONGO_INITDB_TEST_DATABASE: straight-flush-test
     volumes:
       - dp:/data/db
       - ./docker/mongo/conf/primary.conf:/etc/mongod.conf

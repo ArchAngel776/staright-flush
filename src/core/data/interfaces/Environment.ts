@@ -1,4 +1,5 @@
-import { NodeEnv } from "../enums/NodeEnv"
+import { NodeEnv } from "@data/enums/NodeEnv"
+
 
 export default interface Environment extends NodeJS.ProcessEnv
 {

@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Console } from "../core/data/enums/Console"
-import MigrationFilesPrint from "../core/decorators/MigrationFilesPrint"
-import OnlyNewMigrations from "../core/decorators/OnlyNewMigrations"
-import MigrationExecutor from "../core/foundations/MigrationExecutor"
-import Method from "../core/helpers/Method"
-import print from "../core/hooks/print"
-import MigrationApplyingException from "../exceptions/MigrationApplyingException"
+import { Console } from "@data/enums/Console"
+
+import MigrationExecutor from "@foundations/MigrationExecutor"
+import Method from "@helpers/Method"
+import OnlyNewMigrations from "@decorators/OnlyNewMigrations"
+import MigrationFilesPrint from "@decorators/MigrationFilesPrint"
+
+import print from "@hooks/print"
+
+import MigrationApplyingException from "@exceptions/MigrationApplyingException"
+
 
 export default class MigrationUp extends MigrationExecutor
 {
