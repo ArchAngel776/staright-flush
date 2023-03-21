@@ -29,6 +29,14 @@ export default abstract class Template
         return this
     }
 
+    public withParams(params: TemplateParams): this
+    {
+        for (const param in params) {
+            this.with(param, params[param])
+        }
+        return this
+    }
+
     public with(param: string, value: string): this
     {
         this.params[param] = value

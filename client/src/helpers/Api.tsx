@@ -3,7 +3,6 @@ import { HttpType } from "../data/enums/HttpType"
 import { Route } from "../data/enums/Route"
 import GetParams from "../decorators/GetParams"
 import HttpMethodException from "../exception/HttpMethodException"
-import url from "../hooks/url"
 import HttpResponseCallback from "../data/callbacks/HttpResponseCallback"
 import HttpValidateErrorCallback from "../data/callbacks/HttpValidateErrorCallback"
 import HttpErrorCallback from "../data/callbacks/HttpErrorCallback"
@@ -95,9 +94,9 @@ export default class Api<Request, Response>
     {
         switch (this.type) {
             case HttpType.GET:
-                return Axios.get<Response, AxiosResponse<Response, Request>, Request | FormData>(url(this.url), this.options)
+                return Axios.get<Response, AxiosResponse<Response, Request>, Request | FormData>(this.url, this.options)
             case HttpType.POST:
-                return Axios.post<Response, AxiosResponse<Response, Request>, Request | FormData>(url(this.url), this.request, this.options)
+                return Axios.post<Response, AxiosResponse<Response, Request>, Request | FormData>(this.url, this.request, this.options)
             default:
                 throw new HttpMethodException(this.type)
         }

@@ -4,5 +4,6 @@ export enum InputType
     EMAIL       = "email",
     PASSWORD    = "password",
     FILE        = "file",
-    CHECKBOX    = "checkbox"
+    CHECKBOX    = "checkbox",
+    HIDDEN      = "hidden"
 }

@@ -7,6 +7,7 @@ import GeneralError from "../components/GeneralError"
 import Api from "../helpers/Api"
 import registerErrorsReducer, { RegisterErrorsActionType } from "../reducers/registerErrorsReducer"
 import hasErrors from "../hooks/hasErrors"
+import csrf from "../hooks/csrf"
 import createErrorMessage from "../hooks/createErrorMessage"
 import { RegisterRequestData } from "../../../@types/request/RegisterRequestData"
 import { RegisterRequestFiles } from "../../../@types/request/files/RegisterRequestFiles"
@@ -18,6 +19,7 @@ import { ButtonType } from "../data/enums/ButtonType"
 import { RequestErrors } from "../data/types/RequestErrors"
 import EmptyDep from "../data/constans/EmptyDep"
 import "../assets/sass/Auth.sass"
+import Csrf from "../components/Csrf"
 
 export enum RegisterForm
 {
@@ -94,6 +96,7 @@ export default function Register(): JSX.Element
         <Row>
             <Col xxl={{ span: 6, offset: 3 }}>
                 <Form method={HttpType.POST} className="auth-container" validated={validated} onSubmit={submitRegister}>
+                    <Csrf />
                     <Row>
                         <Col xs={12} md={{ span: 10, offset: 1 }}>
                             <Form.Group className="auth-form">

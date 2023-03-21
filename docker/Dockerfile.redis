@@ -1,0 +1,6 @@
+FROM redis:7.0.10-bullseye
+
+COPY redis/session-broker.conf /etc/session-broker.conf
+COPY redis/users.acl /etc/redis/users.acl
+
+CMD ["redis-server", "/etc/session-broker.conf"]

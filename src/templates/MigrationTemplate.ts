@@ -23,7 +23,7 @@ export default class MigrationTemplate extends Template
         const buildPath = resolve(root(), "build", "core", "Migration")
 
         return [
-            [ relative(migrationsPath, buildPath), Migration.name ]
+            [relative(migrationsPath, buildPath), Migration.name]
         ]
     }
 
