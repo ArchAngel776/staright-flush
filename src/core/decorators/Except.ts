@@ -1,4 +1,5 @@
-import { ExceptConstructor } from "./constructors/ExceptConstructor"
+import { ExceptConstructor } from "@decorators/constructors/ExceptConstructor"
+
 
 export default function Except<Target extends ExceptConstructor>(Target: Target)
 {

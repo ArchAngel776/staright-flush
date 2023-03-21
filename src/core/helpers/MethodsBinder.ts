@@ -1,4 +1,5 @@
-import MethodsExtractor from "./MethodsExtractor"
+import MethodsExtractor from "@helpers/MethodsExtractor"
+
 
 export default class MethodsBinder<Target>
 {

@@ -1,7 +1,10 @@
-import Command from "../core/Command"
-import defined from "../core/hooks/defined"
-import print from "../core/hooks/print"
-import TestThrowException from "../exceptions/TestThrowException"
+import defined from "@hooks/defined"
+import print from "@hooks/print"
+
+import Command from "@core/Command"
+
+import TestThrowException from "@exceptions/TestThrowException"
+
 
 export default class TestCommand extends Command
 {

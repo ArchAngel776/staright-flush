@@ -1,8 +1,10 @@
-import CodeNeaster from "./components/CodeNeaster"
-import TemplateImportCreator from "./components/TemplateImportCreator"
-import TemplateParams from "./data/interfaces/TemplateParams"
-import { CodePart } from "./data/types/CodePart"
-import { Import } from "./data/types/Import"
+import TemplateParams from "@data/interfaces/TemplateParams"
+import { CodePart } from "@data/types/CodePart"
+import { Import } from "@data/types/Import"
+
+import CodeNeaster from "@components/CodeNeaster"
+import TemplateImportCreator from "@components/TemplateImportCreator"
+
 
 export default abstract class Template
 {
@@ -24,6 +26,14 @@ export default abstract class Template
     public addImport(imp: Import): this
     {
         this.imports.push(imp)
+        return this
+    }
+
+    public withParams(params: TemplateParams): this
+    {
+        for (const param in params) {
+            this.with(param, params[param])
+        }
         return this
     }
 

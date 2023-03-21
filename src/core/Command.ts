@@ -1,6 +1,8 @@
-import CommandErrorException from "../exceptions/CommandErrorException"
-import UnknownCommandStatusException from "../exceptions/UnknownCommandStatusException"
-import { AsyncAwait } from "./data/types/AsyncAwait"
+import { AsyncAwait } from "@data/types/AsyncAwait"
+
+import CommandErrorException from "@exceptions/CommandErrorException"
+import UnknownCommandStatusException from "@exceptions/UnknownCommandStatusException"
+
 
 export default abstract class Command
 {
@@ -9,7 +11,7 @@ export default abstract class Command
 
     public init(): void 
     {
-        void 0
+        return
     }
 
     public check(): boolean

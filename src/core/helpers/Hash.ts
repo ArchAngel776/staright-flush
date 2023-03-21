@@ -1,5 +1,7 @@
-import { createHash, BinaryToTextEncoding } from "crypto"
-import { Alg } from "../data/enums/Alg"
+import { createHash, randomBytes, BinaryToTextEncoding } from "crypto"
+
+import { Alg } from "@data/enums/Alg"
+
 
 export default class Hash
 {
@@ -14,5 +16,10 @@ export default class Hash
     public static compare(target: string, destiny: string, algorithm?: Alg): boolean
     {
         return this.create(target, algorithm) === destiny
+    }
+
+    public static random(size = 64): string
+    {
+        return randomBytes(size).toString(this.enconding)
     }
 }

@@ -1,9 +1,13 @@
-import ModelSchema from "../data/interfaces/ModelSchema"
-import { ModelDefault } from "../data/symbols/ModelDefault"
-import Model from "../Model"
-import { ModelDefaultsKeys } from "../data/symbols/ModelDefaultsKeys"
-import uniqueFilter from "../hooks/uniqueFilter"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import { ModelDefault } from "@data/symbols/ModelDefault"
+import { ModelDefaultsKeys } from "@data/symbols/ModelDefaultsKeys"
+
+import uniqueFilter from "@hooks/uniqueFilter"
+
+import Model from "@core/Model"
+
 import "reflect-metadata"
+
 
 export default function Default<Schema extends ModelSchema>(value: Schema[keyof Schema])
 {

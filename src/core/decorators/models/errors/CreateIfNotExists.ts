@@ -1,6 +1,8 @@
-import ModelErrors from "../../../components/ModelErrors"
-import { Keyof } from "../../../data/types/Keyof"
-import MethodModel from "../../../foundations/MethodModel"
+import ModelErrors from "@components/ModelErrors"
+import { Keyof } from "@data/types/Keyof"
+
+import MethodModel from "@foundations/MethodModel"
+
 
 export default class CreateIfNotExists<Schema> extends MethodModel<ModelErrors<Schema>, ModelErrors<Schema>, [attribute: Keyof<Schema>, message: string]>
 {

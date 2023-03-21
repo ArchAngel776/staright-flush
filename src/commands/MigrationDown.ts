@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import MigrationFilesPrint from "../core/decorators/MigrationFilesPrint"
-import MigrationExecutor from "../core/foundations/MigrationExecutor"
-import MigrationRevertingException from "../exceptions/MigrationRevertingError"
-import print from "../core/hooks/print"
-import { Console } from "../core/data/enums/Console"
-import Method from "../core/helpers/Method"
-import OnlyExistingMigrations from "../core/decorators/OnlyExistingMigrations"
+import { Console } from "@data/enums/Console"
+
+import MigrationExecutor from "@foundations/MigrationExecutor"
+import Method from "@helpers/Method"
+import OnlyExistingMigrations from "@decorators/OnlyExistingMigrations"
+import MigrationFilesPrint from "@decorators/MigrationFilesPrint"
+
+import print from "@hooks/print"
+
+import MigrationRevertingException from "@exceptions/MigrationRevertingError"
+
 
 export default class MigrationDown extends MigrationExecutor
 {

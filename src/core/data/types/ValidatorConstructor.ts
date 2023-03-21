@@ -1,6 +1,9 @@
-import BaseModel from "../../foundations/BaseModel"
-import { ValidationData } from "../../foundations/Validation"
-import Validator from "../../Validator"
-import { Keyof } from "./Keyof"
+import { Keyof } from "@data/types/Keyof"
 
-export type ValidatorConstructor<Schema, Data extends ValidationData> = new (model: BaseModel<Schema>, attribute: Keyof<Schema>) => Validator<Schema, Data[keyof Data]>
+import BaseModel from "@foundations/BaseModel"
+import { ValidationData } from "@foundations/Validation"
+
+import Validator from "@core/Validator"
+
+
+export type ValidatorConstructor<Schema, Data extends ValidationData<Schema>, Prop extends keyof Data> = new (model: BaseModel<Schema>, attribute: Keyof<Schema>) => Validator<Schema, Data[Prop]>

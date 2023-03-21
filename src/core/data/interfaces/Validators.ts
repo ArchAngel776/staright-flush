@@ -1,7 +1,8 @@
-import { ValidationData } from "../../foundations/Validation"
-import { ValidatorConstructor } from "../types/ValidatorConstructor"
+import { ValidatorConstructor } from "@data/types/ValidatorConstructor"
+import { ValidationData } from "@foundations/Validation"
 
-export type Validators<Schema, Data extends ValidationData> =
+
+export type Validators<Schema, Data extends ValidationData<Schema>> =
 {
-    [property in keyof Data]: ValidatorConstructor<Schema, Data>
+    [Prop in keyof Data]: ValidatorConstructor<Schema, Data, Prop>
 }

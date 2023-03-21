@@ -1,16 +1,25 @@
-import { String } from "../../../core/data/enums/String"
-import { Constructor } from "../../../core/data/types/Constructor"
-import format from "../../../core/hooks/format"
-import Validator from "../../../core/Validator"
+import { Constructor } from "@data/types/Constructor"
 
+import format from "@hooks/format"
+
+import ValidatorSignature from "@decorators/signatures/ValidatorSignature"
+
+import Validator from "@core/Validator"
+
+
+@ValidatorSignature()
 export default class TypeofValidator<Schema> extends Validator<Schema, Constructor>
 {
-    protected name: string = String.EMPTY
+    protected name!: string
 
-    public validate(value: Constructor): boolean
+    public init(Target: Constructor): void
     {
-        this.name = value.name
-        return this.getProperty() instanceof value
+        this.name = Target.name
+    }
+
+    public validate(Target: Constructor): boolean
+    {
+        return this.getProperty() instanceof Target
     }
 
     public getErrorMessage(): string

@@ -1,7 +1,9 @@
 import { resolve } from "path"
 import { existsSync, lstatSync, readFileSync, readdirSync, writeFileSync, appendFileSync, mkdirSync, rmSync } from "fs"
-import { Nullable } from "../data/types/Nullable"
-import Utf8Encoding from "../data/interfaces/Utf8Encoding"
+
+import { Nullable } from "@data/types/Nullable"
+import Utf8Encoding from "@data/interfaces/Utf8Encoding"
+
 
 export default class WorkSpace
 {
@@ -40,7 +42,7 @@ export default class WorkSpace
         return existsSync(path) && lstatSync(path).isDirectory()
     }
 
-    public list(): Nullable<string[]>
+    public list(): Nullable<Array<string>>
     {
         return this.isWorkSpace() ? readdirSync(this.spacePath, this.encoding) : null
     }
@@ -54,7 +56,7 @@ export default class WorkSpace
         return null
     }
 
-    public listDir(name: string): Nullable<string[]>
+    public listDir(name: string): Nullable<Array<string>>
     {
         if (this.hasDir(name)) {
             const path = resolve(this.spacePath, name)
@@ -68,13 +70,12 @@ export default class WorkSpace
         if (!this.isWorkSpace()) {
             return
         }
+
         const path = resolve(this.spacePath, name)
-        if (append) {
-            appendFileSync(path, content, this.encoding)
-        }
-        else {
+
+        return append ?
+            appendFileSync(path, content, this.encoding) :
             writeFileSync(path, content, this.encoding)
-        }
     }
 
     public createDir(name: string): void
@@ -90,7 +91,9 @@ export default class WorkSpace
         if (!this.isWorkSpace()) {
             return
         }
+
         const path = resolve(this.spacePath, name)
+
         if (this.hasFile(name)) {
             rmSync(path)
         }

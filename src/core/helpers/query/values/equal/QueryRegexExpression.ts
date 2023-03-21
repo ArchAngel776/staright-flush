@@ -1,7 +1,10 @@
 import { FilterOperators } from "mongodb"
-import ModelSchema from "../../../../data/interfaces/ModelSchema"
-import { ValueofModel } from "../../../../data/types/ValueofModel"
-import QueryValueExpression from "../../../../foundations/query/QueryValueExpression"
+
+import ModelSchema from "@data/interfaces/ModelSchema"
+import { ValueofModel } from "@data/types/ValueofModel"
+
+import QueryValueExpression from "@foundations/query/QueryValueExpression"
+
 
 export type QueryRegexExpressionValue<Schema extends ModelSchema> = ValueofModel<Schema> extends string ? RegExp : never
 

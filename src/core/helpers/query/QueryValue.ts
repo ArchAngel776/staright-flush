@@ -1,18 +1,22 @@
 import { FilterOperators } from "mongodb"
-import UnknownOperatorException from "../../../exceptions/UnknownOperatorException"
-import QueryEqualFactory from "../../components/factories/query/QueryEqualFactory"
-import QueryExistsFactory from "../../components/factories/query/QueryExistsFactory"
-import QueryGreaterEqualFactory from "../../components/factories/query/QueryGreaterEqualFactory"
-import QueryGreaterFactory from "../../components/factories/query/QueryGreaterFactory"
-import QueryLessEqualFactory from "../../components/factories/query/QueryLessEqualFactory"
-import QueryLessFactory from "../../components/factories/query/QueryLessFactory"
-import QueryNotFactory from "../../components/factories/query/QueryNotFactory"
-import QueryTypeFactory from "../../components/factories/query/QueryTypeFactory"
-import { QueryOperator } from "../../data/enums/QueryOperator"
-import ModelSchema from "../../data/interfaces/ModelSchema"
-import QueryValueFactory from "../../data/interfaces/QueryValueFactory"
-import { QueryValueType } from "../../data/types/QueryValueType"
-import { ValueofModel } from "../../data/types/ValueofModel"
+
+import { QueryOperator } from "@data/enums/QueryOperator"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import QueryValueFactory from "@data/interfaces/QueryValueFactory"
+import { QueryValueType } from "@data/types/QueryValueType"
+import { ValueofModel } from "@data/types/ValueofModel"
+
+import QueryEqualFactory from "@components/factories/query/QueryEqualFactory"
+import QueryExistsFactory from "@components/factories/query/QueryExistsFactory"
+import QueryGreaterEqualFactory from "@components/factories/query/QueryGreaterEqualFactory"
+import QueryGreaterFactory from "@components/factories/query/QueryGreaterFactory"
+import QueryLessEqualFactory from "@components/factories/query/QueryLessEqualFactory"
+import QueryLessFactory from "@components/factories/query/QueryLessFactory"
+import QueryNotFactory from "@components/factories/query/QueryNotFactory"
+import QueryTypeFactory from "@components/factories/query/QueryTypeFactory"
+
+import UnknownOperatorException from "@exceptions/UnknownOperatorException"
+
 
 export default class QueryValue<Schema extends ModelSchema>
 {

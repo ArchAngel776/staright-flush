@@ -1,9 +1,9 @@
 {
     "assumptions": {
-        "setPublicClassFields": false,
+        "setPublicClassFields": true,
         "constantSuper": false,
         "noClassCalls": true,
-        "setClassMethods": false,
+        "setClassMethods": true,
         "superIsCallableConstructor": true
     },
     "presets": [
@@ -15,13 +15,19 @@
                 }
             }
         ],
-        "@babel/preset-typescript"
+        [
+            "@babel/preset-typescript",
+            {
+                "optimizeConstEnums": true
+            }
+        ]
     ],
     "plugins": [
+        "babel-plugin-typescript-path-aliases",
         [
-            "@babel/plugin-proposal-decorators", 
-            { 
-                "legacy": true 
+            "@babel/plugin-proposal-decorators",
+            {
+                "version": "legacy"
             }
         ],
         "@babel/plugin-proposal-class-properties",

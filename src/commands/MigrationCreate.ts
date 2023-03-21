@@ -1,8 +1,12 @@
-import MigrationCommand from "../core/foundations/MigrationCommand"
-import DateHelper from "../core/helpers/DateHelper"
-import Migration from "../core/Migration"
-import MigrationCreateException from "../exceptions/MigrationCreateException"
-import MigrationTemplate from "../templates/MigrationTemplate"
+import MigrationCommand from "@foundations/MigrationCommand"
+import DateHelper from "@helpers/DateHelper"
+
+import Migration from "@core/Migration"
+
+import MigrationCreateException from "@exceptions/MigrationCreateException"
+
+import MigrationTemplate from "@templates/MigrationTemplate"
+
 
 export default class MigrationCreate extends MigrationCommand
 {

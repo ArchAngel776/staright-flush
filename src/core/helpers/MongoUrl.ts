@@ -1,5 +1,6 @@
-import { String } from "../data/enums/String"
-import { Nullable } from "../data/types/Nullable"
+import { String } from "@data/enums/String"
+import { Nullable } from "@data/types/Nullable"
+
 
 export default class MongoURL
 {

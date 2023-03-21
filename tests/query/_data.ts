@@ -1,8 +1,11 @@
-import { Filter, Document } from "mongodb"
-import QueryBuilder from "../../src/core/components/builders/QueryBuilder"
-import ModelSchema from "../../src/core/data/interfaces/ModelSchema"
-import QueryBuilderInterface from "../../src/core/data/interfaces/QueryBuilderInterface"
-import { ProjectionData } from "../../src/core/data/types/ProjectionData"
+import { Filter } from "mongodb"
+
+import ModelSchema from "@data/interfaces/ModelSchema"
+import QueryBuilderInterface from "@data/interfaces/QueryBuilderInterface"
+import { ProjectionData } from "@data/types/ProjectionData"
+
+import QueryBuilder from "@components/builders/QueryBuilder"
+
 
 export default interface Schema extends ModelSchema
 {

@@ -1,0 +1,2 @@
+user default >default
+user straight-flush on +@all ~* >password

@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Scenario from "../data/interfaces/Scenario"
-import { Scenarios } from "../data/interfaces/Scenarios"
-import { Constructor } from "../data/types/Constructor"
-import { Keyof } from "../data/types/Keyof"
-import CreateIfNotExists from "../decorators/models/scenarios/CreateIfNotExists"
-import Method from "../helpers/Method"
-import multi from "../hooks/multi"
+import { Scenarios } from "@data/interfaces/Scenarios"
+import { Constructor } from "@data/types/Constructor"
+import type Scenario from "@data/interfaces/Scenario"
+import type { Keyof } from "@data/types/Keyof"
+
+import Method from "@helpers/Method"
+import CreateIfNotExists from "@decorators/models/scenarios/CreateIfNotExists"
+
+import multi from "@hooks/multi"
+
 
 export default class ValidationScenarios<Schema>
 {
@@ -34,8 +37,7 @@ export default class ValidationScenarios<Schema>
     @Method(<Constructor<CreateIfNotExists<Schema>>> CreateIfNotExists)
     public addScenario(attribute: Keyof<Schema>, validation: Scenario<Schema>): this
     {
-        const scenario = this.getScenarios(attribute)
-        this.scenarios[attribute] = scenario.splice(scenario.length, 0, validation)
+        this.scenarios[attribute] = [...this.getScenarios(attribute), validation]
         return this
     }
 

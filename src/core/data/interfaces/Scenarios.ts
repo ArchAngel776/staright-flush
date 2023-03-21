@@ -1,6 +1,7 @@
-import { Keyof } from "../types/Keyof"
-import { Multi } from "../types/Multi"
-import Scenario from "./Scenario"
+import { Keyof } from "@data/types/Keyof"
+import { Multi } from "@data/types/Multi"
+import Scenario from "@data/interfaces/Scenario"
+
 
 export type Scenarios<Schema> =
 {

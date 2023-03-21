@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Env from "../../../Env"
 import { MongoClient} from "mongodb"
-import MongoURL from "../../helpers/MongoUrl"
-import DatabaseOperation from "../../data/callbacks/DatabaseOperation"
-import Transaction from "./Transaction"
-import Method from "../../helpers/Method"
-import TransactionInitiate from "../../decorators/TransactionInitiate"
+
+import DatabaseOperation from "@data/callbacks/DatabaseOperation"
+
+import Transaction from "@components/database/Transaction"
+import MongoURL from "@helpers/MongoUrl"
+import Method from "@helpers/Method"
+import TransactionInitiate from "@decorators/database/TransactionInitiate"
+
+import Env from "@env"
+
 
 export default class Connection
 {

@@ -1,5 +1,6 @@
-import ModelSchema from "../../data/interfaces/ModelSchema"
-import { ProjectionDataValue, ProjectionDataValues } from "../../data/types/ProjectionData"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import { ProjectionDataValue, ProjectionDataValues } from "@data/types/ProjectionData"
+
 
 export default abstract class QueryArrayProjectionExpression<Schema extends ModelSchema, Type extends ProjectionDataValues<Schema> = ProjectionDataValues<Schema>>
 {

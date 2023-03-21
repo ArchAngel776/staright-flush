@@ -1,21 +1,31 @@
-import format from "../../../core/hooks/format"
-import Validator from "../../../core/Validator"
+import format from "@hooks/format"
 
-export default class MinValidator<Schema> extends Validator<Schema, number>
+import ValidatorSignature from "@decorators/signatures/ValidatorSignature"
+
+import Validator from "@core/Validator"
+
+
+@ValidatorSignature()
+export default class MinValidator<Schema> extends Validator<Schema, number, string>
 {
-    protected value = 0
+    protected min!: number
 
-    public validate(value: number): boolean
+    public init(min: number): void
     {
-        const { length } = this.getProperty<string>()
-        return length >= (this.value = value)
+        this.min = min
+    }
+
+    public validate(min: number): boolean
+    {
+        const { length } = this.getProperty()
+        return length >= min
     }
 
     public getErrorMessage(): string
     {
         return format("Length of property {attribute} cannot be less then {min}", {
             attribute: this.attributeName,
-            min: this.value.toString()
+            min: this.min.toString()
         })
     }
 }

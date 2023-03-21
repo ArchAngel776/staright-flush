@@ -1,6 +1,9 @@
 import { BSONType } from "mongodb"
-import { QueryOperator } from "../../src/core/data/enums/QueryOperator"
+
+import { QueryOperator } from "@data/enums/QueryOperator"
+
 import { matchFilter } from "./_data"
+
 
 const emailRegex = /[a-zA-Z0-9\.\-\_]+\@([a-zA-Z0-9]+\.)*[a-zA-Z0-9]+/
 

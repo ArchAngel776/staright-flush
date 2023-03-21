@@ -1,6 +1,8 @@
 import { Filter } from "mongodb"
-import ModelSchema from "../../data/interfaces/ModelSchema"
-import { MongoFunctionExpression } from "../../data/types/MongoFunctionExpression"
+
+import ModelSchema from "@data/interfaces/ModelSchema"
+import { MongoFunctionExpression } from "@data/types/MongoFunctionExpression"
+
 
 export default class QueryExpressionValue<Schema extends ModelSchema>
 {

@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ClientSession, Db, MongoClient, ReadPreference, TransactionOptions } from "mongodb"
-import DatabaseSessionOperation from "../../data/callbacks/DatabaseSessionOperation"
-import WithMongoClient from "../../data/interfaces/WithMongoClient"
-import CloseClient from "../../decorators/CloseClient"
-import Method from "../../helpers/Method"
+import { ClientSession, Db, MongoClient } from "mongodb"
+
+import WithMongoClient from "@data/interfaces/WithMongoClient"
+import type DatabaseSessionOperation from "@data/callbacks/DatabaseSessionOperation"
+
+import Method from "@helpers/Method"
+import SecureTransaction from "@decorators/database/SecureTransaction"
+import SecureCommit from "@decorators/database/SecureCommit"
+import CloseClient from "@decorators/database/CloseClient"
+
+import { TransactionsConfig } from "@config/Database"
+
 
 export default class Transaction implements WithMongoClient
 {
-    public static OPTIONS: TransactionOptions = {
-        readConcern: { level: "local" },
-        writeConcern: { w: 2 },
-        readPreference: new ReadPreference("secondaryPreferred")
-    }
-
     protected _client: MongoClient
 
     protected session: ClientSession
@@ -28,24 +29,20 @@ export default class Transaction implements WithMongoClient
 
     public init(): void
     {
-        this.session.startTransaction(Transaction.OPTIONS)
+        this.session.startTransaction(TransactionsConfig)
     }
 
-    public make<Type>(operation: DatabaseSessionOperation<Type>): Promise<Type>
+    @Method(SecureTransaction)
+    public async make<Type>(operation: DatabaseSessionOperation<Type>): Promise<Type>
     {
-        return operation(this.database, this.session)
+        return await operation(this.database, this.session)
     }
 
+    @Method(SecureCommit)
     @Method(CloseClient)
     public async commit(): Promise<void>
     {
-        try {
-            await this.session.commitTransaction()
-        }
-        catch (error) {
-            await this.rollback()
-            throw error
-        }
+        await this.session.commitTransaction()
     }
 
     @Method(CloseClient)

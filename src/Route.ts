@@ -1,7 +1,23 @@
-import server from "./index"
+import action from "@hooks/action"
+import validate from "@hooks/validate"
+import middleware from "@core/hooks/middleware"
 
-server.get("/", (request, response) => 
-{
-    response.setHeader("content-type", "text/html;charset=utf-8")
-    response.send("<h1>Foo</h1>")
-})
+import SiteAction from "@actions/SiteAction"
+import RegisterAction from "@actions/RegisterAction"
+
+import RegisterRequest from "@requests/RegisterRequest"
+
+import CsrfValidation from "@middlewares/CsrfValidation"
+
+import app from "@app"
+
+
+app.get("/login", action(SiteAction))
+
+//app.post("/login", action(LoginAction))
+
+app.get("/register", action(SiteAction))
+
+app.post("/register", middleware(CsrfValidation), validate(RegisterRequest), action(RegisterAction))
+
+export default app

@@ -1,6 +1,6 @@
-import { Keyof } from "./Keyof"
+import { Keyof } from "@data/types/Keyof"
 
-export type ModelErrorsData<Schema> =
-{
+
+export type ModelErrorsData<Schema> = {
     [Key in Keyof<Schema>]?: Array<string>
 }

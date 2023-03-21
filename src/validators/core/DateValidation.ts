@@ -1,21 +1,25 @@
-import { Validators } from "../../core/data/interfaces/Validators"
-import { Keyof } from "../../core/data/types/Keyof"
-import BaseModel from "../../core/foundations/BaseModel"
-import Validation, { ValidationData } from "../../core/foundations/Validation"
-import NeastedObjectHelper from "../../core/helpers/NeastedObjectHelper"
-import merge from "../../core/hooks/merge"
-import NewerThenValidator from "./date/NewerThenValidator"
-import OlderThenValidator from "./date/OlderThenValidator"
+import { Validators } from "@data/interfaces/Validators"
+import { Keyof } from "@data/types/Keyof"
 
-export interface DateValidationData extends ValidationData
+import BaseModel from "@foundations/BaseModel"
+import Validation, { ValidationData } from "@foundations/Validation"
+import NeastedObjectHelper from "@helpers/NeastedObjectHelper"
+
+import merge from "@hooks/merge"
+
+import NewerThenValidator from "@validators/core/date/NewerThenValidator"
+import OlderThenValidator from "@validators/core/date/OlderThenValidator"
+
+
+export interface DateValidationData<Schema> extends ValidationData<Schema>
 {
     olderThen: Date
     newerThen: Date
 }
 
-export default class DateValidation<Schema> extends Validation<Schema, DateValidationData>
+export default class DateValidation<Schema> extends Validation<Schema, DateValidationData<Schema>>
 {
-    public validators(): Validators<Schema, DateValidationData>
+    public validators(): Validators<Schema, DateValidationData<Schema>>
     {
         return merge(super.validators(), {
             olderThen: OlderThenValidator,

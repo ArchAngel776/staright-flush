@@ -1,6 +1,8 @@
-import defined from "../../hooks/defined"
-import format from "../../hooks/format"
-import Validator from "../../Validator"
+import defined from "@hooks/defined"
+import format from "@hooks/format"
+
+import Validator from "@core/Validator"
+
 
 export default class RequiredValidator<Schema> extends Validator<Schema, boolean>
 {

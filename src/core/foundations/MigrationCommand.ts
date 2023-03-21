@@ -1,7 +1,11 @@
 import { resolve } from "path"
-import Command from "../Command"
-import WorkSpace from "../components/WorkSpace"
-import root from "../hooks/root"
+
+import WorkSpace from "@components/WorkSpace"
+
+import root from "@hooks/root"
+
+import Command from "@core/Command"
+
 
 export default abstract class MigrationCommand extends Command
 {

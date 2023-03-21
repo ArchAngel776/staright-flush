@@ -1,10 +1,13 @@
-import UnknownProjectionTypeException from "../../../exceptions/UnknownProjectionTypeException"
-import { ProjectionArray } from "../../data/enums/ProjectionArray"
-import ModelSchema from "../../data/interfaces/ModelSchema"
-import { ProjectionDataValue, ProjectionDataValues } from "../../data/types/ProjectionData"
-import QueryArrayProjectionExpression from "../../foundations/query/QueryArrayProjectionExpression"
-import QueryArrayProjectionMatchValue from "./projection/QueryArrayProjectionMatchValue"
-import QueryArrayProjectionSliceValue from "./projection/QueryArrayProjectionSliceValue"
+import { ProjectionArray } from "@data/enums/ProjectionArray"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import { ProjectionDataValue, ProjectionDataValues } from "@data/types/ProjectionData"
+
+import QueryArrayProjectionExpression from "@foundations/query/QueryArrayProjectionExpression"
+import QueryArrayProjectionMatchValue from "@helpers/query/projection/QueryArrayProjectionMatchValue"
+import QueryArrayProjectionSliceValue from "@helpers/query/projection/QueryArrayProjectionSliceValue"
+
+import UnknownProjectionTypeException from "@exceptions/UnknownProjectionTypeException"
+
 
 export default class QueryProjectionValue<Schema extends ModelSchema>
 {

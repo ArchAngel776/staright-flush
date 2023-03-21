@@ -1,4 +1,5 @@
-import StringParams from "../data/interfaces/StringParams"
+import StringParams from "@data/interfaces/StringParams"
+
 
 export default function format(target: string, params: StringParams = {})
 {

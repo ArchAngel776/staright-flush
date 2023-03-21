@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Constructor } from "../data/types/Constructor"
-import { Keyof, KeyofSign } from "../data/types/Keyof"
-import { NeastedObjectChain } from "../data/types/NeastedObject"
-import { Valueof } from "../data/types/Valueof"
-import NeastedObjectEmptyValue from "../decorators/helpers/NeastedObjectEmptyValue"
-import NeastedObjectSetter from "../decorators/helpers/NeastedObjectSetter"
-import Method from "./Method"
+import { Constructor } from "@data/types/Constructor"
+import { Keyof, KeyofSign } from "@data/types/Keyof"
+import { Valueof } from "@data/types/Valueof"
+import type { NeastedObjectChain } from "@data/types/NeastedObject"
+
+import Method from "@helpers/Method"
+import NeastedObjectEmptyValue from "@decorators/helpers/NeastedObjectEmptyValue"
+import NeastedObjectSetter from "@decorators/helpers/NeastedObjectSetter"
+
 
 export default class NeastedObjectHelper<Schema>
 {

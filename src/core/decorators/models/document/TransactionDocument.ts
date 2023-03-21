@@ -1,7 +1,10 @@
-import ModelSchema from "../../../data/interfaces/ModelSchema"
-import CollectionDocument from "../../../foundations/CollectionDocument"
-import MethodModel from "../../../foundations/MethodModel"
-import Model from "../../../Model"
+import ModelSchema from "@data/interfaces/ModelSchema"
+
+import CollectionDocument from "@foundations/CollectionDocument"
+import MethodModel from "@foundations/MethodModel"
+
+import Model from "@core/Model"
+
 
 export default class TransactionDocument<Schema extends ModelSchema> extends MethodModel<Model<Schema>, CollectionDocument>
 {

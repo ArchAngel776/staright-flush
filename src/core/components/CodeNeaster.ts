@@ -1,4 +1,5 @@
-import { CodePart } from "../data/types/CodePart"
+import { CodePart } from "@data/types/CodePart"
+
 
 export default class CodeNeaster
 {

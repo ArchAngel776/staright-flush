@@ -1,15 +1,17 @@
-import { String } from "../data/enums/String"
-import ZeroLeads from "./ZeroLeads";
+import { String } from "@data/enums/String"
+
+import ZeroLeads from "@helpers/ZeroLeads"
+
 
 export default class DateHelper
 {
-    public static LETTER_YEAR = "Y";
-    public static LETTER_MONTH = "m";
-    public static LETTER_DAY = "d";
+    public static LETTER_YEAR = "Y"
+    public static LETTER_MONTH = "m"
+    public static LETTER_DAY = "d"
 
-    public static LETTER_HOUR = "H";
-    public static LETTER_MINUTE = "i";
-    public static LETTER_SECOND = "s";
+    public static LETTER_HOUR = "H"
+    public static LETTER_MINUTE = "i"
+    public static LETTER_SECOND = "s"
 
     public static formatLetter(letter: string, date: Date): string
     {

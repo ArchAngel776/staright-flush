@@ -1,10 +1,14 @@
-import ModelSchema from "../../data/interfaces/ModelSchema"
-import { Keyof } from "../../data/types/Keyof"
-import { Valueof } from "../../data/types/Valueof"
-import MethodModel from "../../foundations/MethodModel"
-import NeastedObjectHelper from "../../helpers/NeastedObjectHelper"
-import defined from "../../hooks/defined"
-import Model from "../../Model"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import { Keyof } from "@data/types/Keyof"
+import { Valueof } from "@data/types/Valueof"
+
+import MethodModel from "@foundations/MethodModel"
+import NeastedObjectHelper from "@helpers/NeastedObjectHelper"
+
+import defined from "@hooks/defined"
+
+import Model from "@core/Model"
+
 
 export default class BindDefaults<Schema extends ModelSchema> extends MethodModel<Model<Schema>, void | boolean>
 {

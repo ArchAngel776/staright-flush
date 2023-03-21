@@ -1,11 +1,16 @@
 import { relative, resolve } from "path"
-import { String } from "../core/data/enums/String"
-import { CodePart } from "../core/data/types/CodePart"
-import { Import } from "../core/data/types/Import"
-import Comment from "../core/helpers/Comment"
-import root from "../core/hooks/root"
-import Migration from "../core/Migration"
-import Template from "../core/Template"
+
+import { String } from "@data/enums/String"
+import { CodePart } from "@data/types/CodePart"
+import { Import } from "@data/types/Import"
+
+import Comment from "@helpers/Comment"
+
+import root from "@hooks/root"
+
+import Migration from "@core/Migration"
+import Template from "@core/Template"
+
 
 export default class MigrationTemplate extends Template
 {
@@ -18,7 +23,7 @@ export default class MigrationTemplate extends Template
         const buildPath = resolve(root(), "build", "core", "Migration")
 
         return [
-            [ relative(migrationsPath, buildPath), Migration.name ]
+            [relative(migrationsPath, buildPath), Migration.name]
         ]
     }
 

@@ -1,15 +1,24 @@
-import { AsyncAwait } from "../../../core/data/types/AsyncAwait"
-import format from "../../../core/hooks/format"
-import strBool from "../../../core/hooks/strBool"
-import Validator from "../../../core/Validator"
+import format from "@hooks/format"
+import strBool from "@hooks/strBool"
 
-export default class AlwaysValidator<Schema> extends Validator<Schema, boolean>
+import ValidatorSignature from "@decorators/signatures/ValidatorSignature"
+
+import Validator from "@core/Validator"
+
+
+@ValidatorSignature()
+export default class AlwaysValidator<Schema> extends Validator<Schema, boolean, boolean>
 {
-    protected value = false
+    protected value!: boolean
 
-    public validate(value: boolean): AsyncAwait<boolean>
+    public init(value: boolean): void
     {
-        return this.getProperty<boolean>() === (this.value = value)
+        this.value = value
+    }
+
+    public validate(value: boolean): boolean
+    {
+        return value === this.getProperty()
     }
 
     public getErrorMessage(): string

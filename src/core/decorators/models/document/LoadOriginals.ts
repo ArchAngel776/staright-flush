@@ -1,9 +1,13 @@
-import CollectionDocumentReader from "../../../components/database/collections/CollectionDocumentReader"
-import ModelSchema from "../../../data/interfaces/ModelSchema"
-import { Nullable } from "../../../data/types/Nullable"
-import MethodModel from "../../../foundations/MethodModel"
-import clone from "../../../hooks/clone"
-import Model from "../../../Model"
+import ModelSchema from "@data/interfaces/ModelSchema"
+import { Nullable } from "@data/types/Nullable"
+
+import MethodModel from "@foundations/MethodModel"
+import CollectionDocumentReader from "@components/database/collections/CollectionDocumentReader"
+
+import clone from "@hooks/clone"
+
+import Model from "@core/Model"
+
 
 export default class LoadOriginals<Schema extends ModelSchema> extends MethodModel<CollectionDocumentReader<Schema>, Promise<Nullable<Model<Schema>>>, [model: Model<Schema>]>
 {

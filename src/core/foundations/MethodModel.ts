@@ -1,6 +1,10 @@
-import OriginalMethodNotImplementedException from "../../exceptions/OriginalMethodNotImplementedException"
-import { FunctionArguments } from "../data/types/FunctionArguments"
-import Bin from "../data/interfaces/Bin"
+import { FunctionArguments } from "@data/types/FunctionArguments"
+import Bin from "@data/interfaces/Bin"
+
+import except from "@hooks/except"
+
+import OriginalMethodNotImplementedException from "@exceptions/OriginalMethodNotImplementedException"
+
 
 export default abstract class MethodModel<Target, Result = void, Arguments extends FunctionArguments = []>
 {
@@ -21,10 +25,7 @@ export default abstract class MethodModel<Target, Result = void, Arguments exten
 
     public original(...args: Arguments): Result
     {
-        if (!this.originalMethod) {
-            throw new OriginalMethodNotImplementedException
-        }
-        return this.originalMethod.call(this.target, ...args)
+        return this.originalMethod ? this.originalMethod.call(this.target, ...args) : except(new OriginalMethodNotImplementedException)
     }
 
     public abstract method(this: Target, model: MethodModel<Target, Result, Arguments>, ...args: Arguments): Result

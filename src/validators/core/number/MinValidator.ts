@@ -1,20 +1,30 @@
-import format from "../../../core/hooks/format"
-import Validator from "../../../core/Validator"
+import ValidatorSignature from "@decorators/signatures/ValidatorSignature"
 
-export default class MinValidator<Schema> extends Validator<Schema, number>
+import format from "@hooks/format"
+
+import Validator from "@core/Validator"
+
+
+@ValidatorSignature()
+export default class MinValidator<Schema> extends Validator<Schema, number, number>
 {
-    protected value = 0
+    protected min!: number
 
-    public validate(value: number): boolean
+    public init(min: number): void
     {
-        return (this.value = value) <= this.getProperty<number>()
+        this.min = min
+    }
+
+    public validate(min: number): boolean
+    {
+        return min <= this.getProperty()
     }
 
     public getErrorMessage(): string
     {
         return format("Property {attribute} must be greater than or equal {min}", {
             attribute: this.attributeName,
-            min: this.value.toString()
+            min: this.min.toString()
         })
     }
 }
