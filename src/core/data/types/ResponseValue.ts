@@ -1,0 +1,1 @@
+export type ResponseValue = number | string | Array<string>

@@ -1,8 +1,12 @@
-import Commands from "./commands/index"
-import { Console } from "./core/data/enums/Console"
-import { CommandConstructor } from "./core/data/types/CommandContructor"
-import print from "./core/hooks/print"
-import UnknownCommandException from "./exceptions/UnknownCommandException"
+import { Console } from "@data/enums/Console"
+import { CommandConstructor } from "@data/types/CommandContructor"
+
+import print from "@hooks/print"
+
+import Commands from "@commands/index"
+
+import UnknownCommandException from "@exceptions/UnknownCommandException"
+
 
 export default class Cli
 {

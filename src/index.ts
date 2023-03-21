@@ -1,17 +1,12 @@
-import express from "express"
+import Env from "@env"
+import app from "@route"
 
-const PORT = process.env.PORT || 3000
-const server = express()
 
-server.get("/", (request, response) => 
-{
-    response.setHeader("content-type", "text/html;charset=utf-8")
-    response.send("<h1>Foo</h1>")
-})
+const PORT = Env.PORT || 3000
 
-server.listen(PORT, () => 
+app.listen(PORT, () =>
 {
     console.log(`Server started at: ${PORT} port.`)
 })
 
-export default server
+export default app

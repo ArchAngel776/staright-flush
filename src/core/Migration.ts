@@ -1,7 +1,14 @@
-import { ClientSession, Collection, Db, Document, IndexSpecification } from "mongodb"
+import { ClientSession, Collection, Db, Document } from "mongodb"
+
+import { Multi } from "@data/types/Multi"
+
+import multi from "@hooks/multi"
+
 
 export default abstract class Migration
 {
+    public static INDEX_FIELD = 1
+
     protected database: Db
 
     protected session: ClientSession
@@ -33,9 +40,7 @@ export default abstract class Migration
 
     public dropCollection(name: string): Promise<boolean>
     {
-        return this.database.dropCollection(name, {
-            session: this.session
-        })
+        return this.database.dropCollection(name)
     }
 
     public hasIndex(name: string, collection: string): Promise<boolean>
@@ -43,15 +48,9 @@ export default abstract class Migration
         return this.database.collection(collection).indexExists(name)
     }
 
-    public createIndex(name: string, collection: string, fields: string|Array<string>, unique = false): Promise<string>
+    public createIndex(name: string, collection: string, fields: Multi<string>, unique = false): Promise<string>
     {
-        if (!Array.isArray(fields)) {
-            fields = [ fields ]
-        }
-
-        const index: IndexSpecification = {}
-        fields.forEach(field => index[field] = 1)
-        return this.database.collection(collection).createIndex(index, {
+        return this.database.collection(collection).createIndex(multi(fields), {
             name, unique,
             session: this.session
         })
@@ -59,9 +58,7 @@ export default abstract class Migration
 
     public dropIndex(name: string, collection: string): Promise<Document>
     {
-        return this.database.collection(collection).dropIndex(name, {
-            session: this.session
-        })
+        return this.database.collection(collection).dropIndex(name)
     }
 
     public abstract apply(): Promise<boolean>

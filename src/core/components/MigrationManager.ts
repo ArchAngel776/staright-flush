@@ -1,11 +1,18 @@
 import { ClientSession, Db } from "mongodb"
-import Connection from "./Connection"
-import DatabaseSessionOperation from "../data/callbacks/DatabaseSessionOperation"
-import { MigrationConstructor } from "../data/types/MigrationConstructor"
+
+import DatabaseSessionOperation from "@data/callbacks/DatabaseSessionOperation"
+import { MigrationConstructor } from "@data/types/MigrationConstructor"
+
+import Connection from "@components/database/Connection"
+import MigrationHelper from "@helpers/MigrationHelper"
+
+import print from "@hooks/print"
+import getError from "@hooks/getError"
+
 
 export default class MigrationManager
 {
-    protected connection: Connection
+    protected readonly connection: Connection
 
     public constructor()
     {
@@ -21,7 +28,7 @@ export default class MigrationManager
             return result
         }
         catch (exception) {
-            console.log(exception)
+            print(getError(exception))
             await transaction.rollback()
             return false
         }
@@ -29,11 +36,11 @@ export default class MigrationManager
 
     public executeApplying(Migration: MigrationConstructor): Promise<boolean>
     {
-        return this.execute((database: Db, session: ClientSession) => new Migration(database, session).apply())
+        return this.execute((database: Db, session: ClientSession) => new MigrationHelper(database, session).apply(Migration))
     }
 
     public executeReverting(Migration: MigrationConstructor): Promise<boolean>
     {
-        return this.execute((database: Db, session: ClientSession) => new Migration(database, session).revert())
+        return this.execute((database: Db, session: ClientSession) => new MigrationHelper(database, session).revert(Migration))
     }
 }

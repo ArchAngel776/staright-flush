@@ -1,8 +1,10 @@
 version: "3.9"
 
+
 networks:
   net-straight-flush:
     name: straight-flush-net
+
 
 services:
   app:
@@ -10,25 +12,22 @@ services:
     image: node:16.16.0
     restart: always
     ports:
-      - "80:3000"
+      - "80:${PORT}"
     volumes:
       - ./:/app
-    environment:
-      NODE_ENV: dev
-      PORT: 3000
-      DB_HOST: s1.database.straight-flush.pl
-      DB_PORT: 27017
-      DB_USER: straight-flush
-      DB_PASS: password
-      DB_NAME: straight-flush
+    env_file:
+      - .env
     working_dir: /app
-    command: node build/index.js
+    command: yarn dev
     depends_on:
       - db-primary
+      - db-secondary
+      - db-arbiter
+      - session-broker
     networks:
       net-straight-flush:
         aliases:
-          - www.straight-flush.pl
+          - ${HOST}
 
   db-primary:
     container_name: straight-flush-database-primary
@@ -37,11 +36,14 @@ services:
       dockerfile: Dockerfile.mongo
     restart: always
     environment:
-      MONGO_ADMIN_NAME: admin
-      MONGO_ADMIN_PASS: password
-      MONGO_APP_USER_NAME: straight-flush
-      MONGO_APP_USER_PASSWORD: password
-      MONGO_INITDB_DATABASE: straight-flush
+      MONGO_ADMIN_NAME:           admin
+      MONGO_ADMIN_PASS:           password
+      MONGO_APP_USER_NAME:        straight-flush
+      MONGO_APP_USER_PASSWORD:    password
+      MONGO_TEST_USER_NAME:       straight-flush-test
+      MONGO_TEST_USER_PASSWORD:   password
+      MONGO_INITDB_DATABASE:      straight-flush
+      MONGO_INITDB_TEST_DATABASE: straight-flush-test
     volumes:
       - dp:/data/db
       - ./docker/mongo/conf/primary.conf:/etc/mongod.conf
@@ -90,13 +92,8 @@ services:
       - "8080:8081"
     environment:
       ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
-      ME_CONFIG_MONGODB_SERVER: s1.database.straight-flush.pl
-      ME_CONFIG_MONGODB_PORT: 27017
-      ME_CONFIG_MONGODB_AUTH_USERNAME: straight-flush
-      ME_CONFIG_MONGODB_AUTH_PASSWORD: password
-      ME_CONFIG_MONGODB_AUTH_DATABASE: straight-flush
-    volumes:
-      - ./docker/mongo-admin.sh:/docker-entrypoint.sh
+      ME_CONFIG_MONGODB_URL: mongodb://straight-flush:password@s1.database.straight-flush.pl:27017,s2.database.straight-flush.pl:27017,sa.database.straight-flush.pl:27017/straight-flush?ssl=false&replicaSet=rsStraightFlush
+    command: node --unhandled-rejections=strict app
     depends_on:
       - db-primary
       - db-secondary
@@ -104,8 +101,24 @@ services:
     networks:
       - net-straight-flush
 
+  session-broker:
+    container_name: straight-flush-session-broker
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.redis
+    restart: always
+    volumes:
+      - sb:/data
+    networks:
+      net-straight-flush:
+        aliases:
+          - session.straight-flush.pl
+
+
 volumes:
   dp:
     name: straight-flush-data-primary
   ds:
     name: straight-flush-data-secondary
+  sb:
+    name: straight-flush-session-broker

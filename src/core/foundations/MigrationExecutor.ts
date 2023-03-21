@@ -1,8 +1,11 @@
-import EmptyMigrationException from "../../exceptions/EmptyMigrationException"
-import MigrationManager from "../components/MigrationManager"
-import { MigrationConstructor } from "../data/types/MigrationConstructor"
-import { Nullable } from "../data/types/Nullable"
-import MigrationCommand from "./MigrationCommand"
+import { MigrationConstructor } from "@data/types/MigrationConstructor"
+import { Nullable } from "@data/types/Nullable"
+
+import MigrationCommand from "@foundations/MigrationCommand"
+import MigrationManager from "@components/MigrationManager"
+
+import EmptyMigrationException from "@exceptions/EmptyMigrationException"
+
 
 export default abstract class MigrationExecutor extends MigrationCommand
 {
@@ -40,12 +43,17 @@ export default abstract class MigrationExecutor extends MigrationCommand
         return new RegExp(`^${MigrationExecutor.MIGRATION_PREFIX}_(.+)\\.js$`)
     }
 
+    public get migrationsList(): Array<string>
+    {
+        return this.migrations
+    }
+
     public get current(): MigrationConstructor
     {
-        if (this.currentMigration) {
-            return this.currentMigration
+        if (!this.currentMigration) {
+            throw new EmptyMigrationException
         }
-        throw new EmptyMigrationException
+        return this.currentMigration
     }
 
     public set current(migration: MigrationConstructor)

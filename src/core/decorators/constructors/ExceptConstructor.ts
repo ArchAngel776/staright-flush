@@ -1,4 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Exception from "../../void/Exception"
+import { Constructor } from "@data/types/Constructor"
 
-export type ExceptConstructor = new (...args: Array<any>) => Exception
+import Exception from "@core/Exception"
+
+
+export type ExceptConstructor = Constructor<Exception & { 
+    getName(): string
+    getMessage(): string
+}>

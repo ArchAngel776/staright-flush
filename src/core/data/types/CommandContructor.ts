@@ -1,3 +1,6 @@
-import Command from "../../Command"
+import { Constructor } from "@data/types/Constructor"
 
-export type CommandConstructor = new (...args: Array<string>) => Command
+import Command from "@core/Command"
+
+
+export type CommandConstructor = Constructor<Command, Array<string>>

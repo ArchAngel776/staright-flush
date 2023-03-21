@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Except from "../core/decorators/Except"
-import Exception from "../core/Exception"
+import Except from "@decorators/Except"
+
+import Exception from "@core/Exception"
+
 
 @Except
 export default class TestThrowException extends Exception

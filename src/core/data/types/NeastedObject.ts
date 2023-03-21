@@ -1,0 +1,1 @@
+export type NeastedObjectChain<Schema> = Schema extends object ? Schema | { [Key in keyof Schema]: NeastedObjectChain<Schema[Key]> }[keyof Schema] : Schema

@@ -1,0 +1,1 @@
+export type Attr<Type> = Type | undefined

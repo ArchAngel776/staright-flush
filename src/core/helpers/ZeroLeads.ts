@@ -1,4 +1,5 @@
-import { String } from "../data/enums/String"
+import { String } from "@data/enums/String"
+
 
 export default class ZeroLeads
 {

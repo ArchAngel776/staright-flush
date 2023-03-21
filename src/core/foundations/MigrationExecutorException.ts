@@ -1,5 +1,7 @@
-import { String } from "../data/enums/String"
-import Exception from "../Exception"
+import { String } from "@data/enums/String"
+
+import Exception from "@core/Exception"
+
 
 export default abstract class MigrationExecutorException extends Exception
 {

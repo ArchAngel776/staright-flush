@@ -1,0 +1,1 @@
+export const ModelAlias = Symbol("model:alias")

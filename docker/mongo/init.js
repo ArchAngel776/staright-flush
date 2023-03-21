@@ -3,7 +3,7 @@ db.createCollection("migrations", {
         $jsonSchema: {
             title: "Database migrations validator",
             bsonType: "object",
-            required: ["_id", "migration_name", "execute"],
+            required: ["_id", "migration_name", "created_at"],
             properties: {
                 _id: {
                     bsonType: "objectId",

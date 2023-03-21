@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import MigrationFilesPrint from "../core/decorators/MigrationFilesPrint"
-import MigrationExecutor from "../core/foundations/MigrationExecutor"
-import MigrationRevertingException from "../exceptions/MigrationRevertingError"
-import print from "../core/hooks/print"
-import { Console } from "../core/data/enums/Console"
+import { Console } from "@data/enums/Console"
+
+import MigrationExecutor from "@foundations/MigrationExecutor"
+import Method from "@helpers/Method"
+import OnlyExistingMigrations from "@decorators/OnlyExistingMigrations"
+import MigrationFilesPrint from "@decorators/MigrationFilesPrint"
+
+import print from "@hooks/print"
+
+import MigrationRevertingException from "@exceptions/MigrationRevertingError"
+
 
 export default class MigrationDown extends MigrationExecutor
 {
@@ -12,7 +18,8 @@ export default class MigrationDown extends MigrationExecutor
      */
     public static MIGRATION_REVERTING_ERROR = -2
 
-    @MigrationFilesPrint("Below files will be reverted:")
+    @Method(OnlyExistingMigrations)
+    @Method(MigrationFilesPrint, "Below files will be reverted:", "No migrations to reverting.")
     public async execute(): Promise<number>
     {
         for (const migration of this.migrations) {
@@ -23,7 +30,7 @@ export default class MigrationDown extends MigrationExecutor
                 return MigrationDown.MIGRATION_REVERTING_ERROR
             }
             
-            print(`Successful aplied migration: ${migration}`, Console.GREEN)
+            print(`Successful reverted migration: ${migration}`, Console.GREEN)
         }
 
         return MigrationDown.SUCCESS

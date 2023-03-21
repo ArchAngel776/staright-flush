@@ -1,6 +1,7 @@
-import { String } from "../data/enums/String"
+import rootPath from "get-root-path"
+
 
 export default function root(): string
 {
-    return require.main?.path || String.EMPTY
+    return rootPath
 }

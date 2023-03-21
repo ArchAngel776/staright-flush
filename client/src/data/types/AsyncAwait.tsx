@@ -1,0 +1,1 @@
+export type AsyncAwait<Type = void> = Type | Promise<Type>

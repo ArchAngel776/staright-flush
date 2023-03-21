@@ -1,6 +1,8 @@
-import { Safe } from "../types/Safe"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { FunctionArguments } from "@data/types/FunctionArguments"
 
-export default interface Bin<Type = Safe, Arguments = Safe> 
+
+export default interface Bin<Type = any, Arguments extends FunctionArguments = any> 
 {
-    (...args: Array<Arguments>): Type
+    (...args: Arguments): Type
 }

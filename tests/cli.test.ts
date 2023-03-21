@@ -1,29 +1,42 @@
-import Cli from "../src/Cli"
-import TestThrowException from "../src/exceptions/TestThrowException"
+import { Console } from "@data/enums/Console"
 
-const log = jest.spyOn(console, "log")
+import TestThrowException from "@exceptions/TestThrowException"
 
-test("Check Test Command", () => 
+import Cli from "@cli"
+
+
+const data = {
+    log: jest.spyOn(console, "log")
+}
+
+beforeEach(() => {
+    data.log = jest.spyOn(console, "log")
+})
+
+test("Check Test Command", async () => 
 {
     const param = "custom-command"
 
     const cli = new Cli("test-command", param)
-    cli.run()
+    await cli.run()
 
-    expect(log).toHaveBeenCalledWith(`Command with param: ${param}`)
+    expect(data.log).toHaveBeenCalledWith(Console.WHITE, `Command with param: ${param}`)
 })
 
-test("Check Test Command with default param", () =>
+test("Check Test Command with default param", async () =>
 {
     const cli = new Cli("test-command")
-    cli.run()
+    await cli.run()
 
-    expect(log).toHaveBeenCalledWith("Command with param: foo")
+    expect(data.log).toHaveBeenCalledWith(Console.WHITE, "Command with param: foo")
 })
 
-test("Check Test Command with throw", () => 
+test("Check Test Command with throw", async () => 
 {
-    const cli = new Cli("test-command", "throw")
+    const exception = new TestThrowException
 
-    expect(() => cli.run()).toThrow(TestThrowException)
+    const cli = new Cli("test-command", "throw")
+    await cli.run()
+
+    expect(data.log).toHaveBeenCalledWith(Console.RED, `${exception.name}: ${exception.message}`)
 })

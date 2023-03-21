@@ -6,3 +6,4 @@ tests/**/*
 jest.config.js
 jest.config.ts
 straight-flush.js
+vite.config.ts

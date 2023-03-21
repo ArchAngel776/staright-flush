@@ -10,5 +10,5 @@ db.createUser({
             "db": "$MONGO_INITDB_DATABASE"
         }
     ]
-})
+});
 EOF

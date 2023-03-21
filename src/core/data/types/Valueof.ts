@@ -1,0 +1,1 @@
+export type Valueof<Schema, Keyof> = Schema extends object ? Keyof extends keyof Schema ? Schema[Keyof] : Keyof extends `${infer First}.${infer Rest}` ? First extends keyof Schema ? Valueof<Schema[First], Rest> : never : never : never

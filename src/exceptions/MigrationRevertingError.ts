@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Except from "../core/decorators/Except"
-import MigrationExecutorException from "../core/foundations/MigrationExecutorException"
+import MigrationExecutorException from "@foundations/MigrationExecutorException"
+import Except from "@decorators/Except"
+
 
 @Except
 export default class MigrationRevertingException extends MigrationExecutorException
