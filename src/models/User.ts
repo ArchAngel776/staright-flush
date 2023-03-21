@@ -1,24 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import ModelSchema from "@data/interfaces/ModelSchema"
-import QueryCallback from "@data/callbacks/QueryCallback"
-import { TransactionData } from "@data/types/TransactionData"
+import UserInterface from "@data/interfaces/UserInterface"
 import { Scenarios } from "@data/interfaces/Scenarios"
 import { Alg } from "@data/enums/Alg"
-import { ModelID } from "@data/types/ModelID"
 import { Nullable } from "@data/types/Nullable"
 import type { Attr } from "@data/types/Attr"
 
+import Repository from "@foundations/Repository"
 import { ValidationData } from "@foundations/Validation"
+import Hash from "@helpers/Hash"
+import ModelSignature from "@decorators/signatures/ModelSignature"
 import ModelTimestamps from "@decorators/ModelTimestamps"
 import Attribute from "@decorators/Attribute"
 import Default from "@decorators/Default"
-import ModelSignature from "@decorators/signatures/ModelSignature"
 
 import merge from "@hooks/merge"
-import findModel from "@hooks/findModel"
-import findModelByQuery from "@hooks/findModelByQuery"
-import findAllModelsByQuery from "@hooks/findAllModelsByQuery"
-import deleteModels from "@hooks/deleteModels"
 
 import Model from "@core/Model"
 
@@ -30,6 +26,9 @@ import UsernameValidation from "@validators/UsernameValidation"
 import EmailValidation from "@validators/EmailValidation"
 import PasswordValidation from "@validators/PasswordValidation"
 import ConsentsTermsValidation from "@validators/ConsentsTermsValidation"
+
+import UserRepository from "@repositories/UserRepository"
+import avatar from "@core/hooks/avatar"
 
 
 export interface UserSchema extends ModelSchema
@@ -70,9 +69,9 @@ export default class User extends Model<UserSchema>
         return "users"
     }
 
-    public getModel(): typeof User
+    public getRepository(): Repository<UserSchema, User>
     {
-        return User
+        return new UserRepository
     }
 
     public validation(): Scenarios<UserSchema>
@@ -90,23 +89,29 @@ export default class User extends Model<UserSchema>
         })
     }
 
-    public static find(id: ModelID, transaction?: TransactionData): Promise<Nullable<User>>
+    public checkPassword(password: string): boolean
     {
-        return findModel(User, id, transaction)
+        return this.original.password ? Hash.compare(password, this.original.password.hash) : false
     }
 
-    public static query(callback: QueryCallback<UserSchema>, transaction?: TransactionData): Promise<Nullable<User>>
+    public getInterface(): Nullable<UserInterface>
     {
-        return findModelByQuery(User, callback, transaction)
-    }
-
-    public static queryAll(callback: QueryCallback<UserSchema>, transaction?: TransactionData): Promise<Array<User>>
-    {
-        return findAllModelsByQuery(User, callback, transaction)
-    }
-
-    public static deleteAll(callback: QueryCallback<UserSchema>, transaction?: TransactionData): Promise<number>
-    {
-        return deleteModels(User, callback, transaction)
+        const { _id, user } = this
+        
+        if (_id && user) {
+            const id = _id.toString()
+            const avatarURL = avatar(id)
+            
+            if (avatarURL) {
+                return {
+                    type: "standard",
+                    id,
+                    username: user.name,
+                    email: user.email,
+                    avatar: avatarURL
+                }
+            }
+        }
+        return null
     }
 }

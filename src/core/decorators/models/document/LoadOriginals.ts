@@ -19,8 +19,8 @@ export default class LoadOriginals<Schema extends ModelSchema> extends MethodMod
             return null
         }
 
-        for (const attribute in model.attributes) {
-            result.originalAttributes[attribute] = clone(model.attributes[attribute])
+        for (const attribute in result.attributes) {
+            result.originalAttributes[attribute] = clone(result.attributes[attribute])
         }
 
         return result

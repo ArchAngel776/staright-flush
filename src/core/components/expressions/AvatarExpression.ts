@@ -1,0 +1,1 @@
+export const AvatarExpression = (id: string) => new RegExp(`^${id}\.(.+)$`)

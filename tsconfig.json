@@ -30,6 +30,7 @@
             "@exceptions/*": ["src/exceptions/*"],
             "@middlewares/*": ["src/middlewares/*"],
             "@models/*": ["src/models/*"],
+            "@repositories/*": ["src/repositories/*"],
             "@requests/*": ["src/requests/*"],
             "@scenarios/*": ["src/scenarios/*"],
             "@templates/*": ["src/templates/*"],

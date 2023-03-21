@@ -13,9 +13,14 @@ import Action from "@core/Action"
 export default class LoginAction extends Action<LoginRequestData, LoginResponseData>
 {
     @Method(<CT<LoginRequestData, LoginResponseData>> ContentType, MimeType.JSON)
-    public make(response: ResponseInterface<LoginResponseData>): ResponseInterface<LoginResponseData>
+    public async make(response: ResponseInterface<LoginResponseData>): Promise<ResponseInterface<LoginResponseData>>
     {
-        return response
-            .with({})
+        const { username, password } = this.data
+
+        if (await this.auth.login(username, password)) {
+            return response.with({ success: true })
+        }
+
+        return response.unathorized().with({ success: false, message: "Błędny login lub hasło" })
     }
 }

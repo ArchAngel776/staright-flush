@@ -7,7 +7,6 @@ import GeneralError from "../components/GeneralError"
 import Api from "../helpers/Api"
 import registerErrorsReducer, { RegisterErrorsActionType } from "../reducers/registerErrorsReducer"
 import hasErrors from "../hooks/hasErrors"
-import csrf from "../hooks/csrf"
 import createErrorMessage from "../hooks/createErrorMessage"
 import { RegisterRequestData } from "../../../@types/request/RegisterRequestData"
 import { RegisterRequestFiles } from "../../../@types/request/files/RegisterRequestFiles"
@@ -18,8 +17,9 @@ import { InputType } from "../data/enums/InputType"
 import { ButtonType } from "../data/enums/ButtonType"
 import { RequestErrors } from "../data/types/RequestErrors"
 import EmptyDep from "../data/constans/EmptyDep"
-import "../assets/sass/Auth.sass"
 import Csrf from "../components/Csrf"
+import PageHelper from "../helpers/PageHelper"
+import "../assets/sass/Auth.sass"
 
 export enum RegisterForm
 {
@@ -55,9 +55,11 @@ export default function Register(): JSX.Element
         dispatchErrors({
             type: RegisterErrorsActionType.RESET
         })
-        setValidated(true)
 
-        console.log(response)
+        if (response.success) {
+            setValidated(true)
+            PageHelper.goTo(Route.LOGIN)
+        }
     }, EmptyDep)
 
     const handleValidateError = useCallback((errors: RequestErrors<RegisterRequestData>) => {

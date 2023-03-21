@@ -1,7 +1,7 @@
 import { MiddlewareConstructor } from "@decorators/constructors/MiddlewareConstructor"
 
 
-export default function MiddlewareSignature<RequestData, ResponseData>()
+export default function MiddlewareSignature<RequestData = object, ResponseData = string>()
 {
     return function <Target extends MiddlewareConstructor<RequestData, ResponseData>>(Target: Target): Target
     {

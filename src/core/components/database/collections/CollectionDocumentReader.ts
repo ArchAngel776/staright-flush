@@ -48,7 +48,7 @@ export default class CollectionDocumentReader<Schema extends ModelSchema> extend
         const result = await this.make(database => database.collection<Schema>(model.collection()).findOne(this.filter, this.getOptions()))
 
         if (result) {
-            const Model = <ModelConstructor<Schema, Target>> model.getModel()
+            const Model = <ModelConstructor<Schema, Target>> model.getRepository().getModel()
             return new Model(result)
         }
 
@@ -60,7 +60,7 @@ export default class CollectionDocumentReader<Schema extends ModelSchema> extend
     {
         const result = await this.make(database => database.collection<Schema>(model.collection()).find(this.filter, this.getOptions()).toArray())
 
-        const Model = <ModelConstructor<Schema, Target>> model.getModel()
+        const Model = <ModelConstructor<Schema, Target>> model.getRepository().getModel()
         return result.map(attributes => new Model(attributes))
     }
 

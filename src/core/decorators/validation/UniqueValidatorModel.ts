@@ -14,6 +14,6 @@ export default class UniqueValidatorModel<Schema> extends MethodModel<UniqueVali
 {
     public method(this: UniqueValidator<Schema>, { original }: UniqueValidatorModel<Schema>, value: UniqueValue): Promise<boolean>
     {
-        return typeof value === "boolean" && value ? this.model instanceof Model ? original(Unique.collection(this.model.getModel())) : except(new CollectionNameException) : original(value)
+        return typeof value === "boolean" && value ? this.model instanceof Model ? original(Unique.collection(this.model.getRepository().getModel())) : except(new CollectionNameException) : original(value)
     }
 }

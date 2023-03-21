@@ -13,8 +13,8 @@ declare module "express-session"
     }
 }
 
-@MiddlewareSignature<CsrfRequest, string>()
-export default class CsrfValidation extends Middleware<CsrfRequest, string>
+@MiddlewareSignature<CsrfRequest>()
+export default class CsrfValidation extends Middleware<CsrfRequest>
 {
     public make(): boolean
     {
