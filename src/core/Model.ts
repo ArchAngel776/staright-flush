@@ -9,7 +9,6 @@ import ModelEvents, { ModelObserver, ModelObservers } from "@data/interfaces/Mod
 import { Nullable } from "@data/types/Nullable"
 import { Constructor } from "@data/types/Constructor"
 import { Defaults } from "@data/types/Defaults"
-import { ModelConstructor } from "@data/types/ModelContructor"
 import { BeforeFindData } from "@data/types/BeforeFindData"
 import { ModelEvent } from "@data/enums/ModelEvent"
 import { TransactionData } from "@data/types/TransactionData"
@@ -46,6 +45,7 @@ import BeforeDeleteEvent from "@events/BeforeDeleteEvent"
 import AfterDeleteEvent from "@events/AfterDeleteEvent"
 
 import ObjectValidation, { ObjectValidationData } from "@validators/core/ObjectValidation"
+import Repository from "./foundations/Repository"
 
 @ModelSignature()
 export default abstract class Model<Schema extends ModelSchema> extends BaseModel<Schema> implements ModelCollection, ModelEvents<Schema>
@@ -69,7 +69,7 @@ export default abstract class Model<Schema extends ModelSchema> extends BaseMode
         }
     }
 
-    public abstract getModel(): ModelConstructor<Schema, Model<Schema>>
+    public abstract getRepository(): Repository<Schema, Model<Schema>>
 
     public abstract collection(): string
 

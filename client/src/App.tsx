@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { Route } from "./data/enums/Route"
+import Home from "./screens/Home"
 import Login from "./screens/Login"
 import Register from "./screens/Register"
 import NotFound from "./screens/NotFound"
@@ -8,6 +9,10 @@ import "./assets/sass/App.sass"
 export default function App(): JSX.Element
 {
     const route = createBrowserRouter([
+        {
+            path: Route.HOME,
+            element: <Home />
+        },
         {
             path: Route.LOGIN,
             element: <Login />
