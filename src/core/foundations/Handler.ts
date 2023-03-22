@@ -1,4 +1,4 @@
-import { SessionData } from "express-session"
+import { Session, SessionData } from "express-session"
 
 import { Request } from "@data/types/Request"
 import AuthInterface from "@data/interfaces/AuthInterface"
@@ -20,7 +20,7 @@ export default class Handler<RequestData, ResponseData>
         return this.request.body
     }
 
-    protected get session(): Partial<SessionData>
+    protected get session(): Session & Partial<SessionData>
     {
         return this.request.session
     }

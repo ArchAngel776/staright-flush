@@ -1,5 +1,4 @@
-import { UserType } from "@data/types/UserType"
-
+import { UserType } from "./UserType"
 
 export default interface UserInterface
 {

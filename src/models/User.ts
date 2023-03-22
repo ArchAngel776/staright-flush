@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import UserInterface from "../../@types/UserInterface"
+
 import ModelSchema from "@data/interfaces/ModelSchema"
-import UserInterface from "@data/interfaces/UserInterface"
 import { Scenarios } from "@data/interfaces/Scenarios"
 import { Alg } from "@data/enums/Alg"
 import { Nullable } from "@data/types/Nullable"

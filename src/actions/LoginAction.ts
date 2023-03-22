@@ -15,9 +15,13 @@ export default class LoginAction extends Action<LoginRequestData, LoginResponseD
     @Method(<CT<LoginRequestData, LoginResponseData>> ContentType, MimeType.JSON)
     public async make(response: ResponseInterface<LoginResponseData>): Promise<ResponseInterface<LoginResponseData>>
     {
-        const { username, password } = this.data
+        const { username, password, remember } = this.data
 
         if (await this.auth.login(username, password)) {
+            if (remember) {
+                this.auth.remember()
+            }
+            
             return response.with({ success: true })
         }
 

@@ -4,5 +4,6 @@ export enum Route
     LOGIN = "/login",
     REGISTER = "/register",
     LOGOUT = "/logout",
+    ME = "/me",
     NOT_FOUND = "*"
 }

@@ -1,6 +1,7 @@
-import { SessionData } from "express-session"
+import { Session, SessionData } from "express-session"
 
-import UserInterface from "@data/interfaces/UserInterface"
+import UserInterface from "../../../@types/UserInterface"
+
 import AuthInterface from "@data/interfaces/AuthInterface"
 
 import defined from "@hooks/defined"
@@ -18,11 +19,11 @@ declare module "express-session"
 
 export default class AuthManager implements AuthInterface
 {
-    protected session: Partial<SessionData>
+    protected session: Session & Partial<SessionData>
 
     protected repository: UserRepository
 
-    protected constructor(session: Partial<SessionData>)
+    protected constructor(session: Session & Partial<SessionData>)
     {
         this.session = session
         this.repository = new UserRepository
@@ -50,13 +51,20 @@ export default class AuthManager implements AuthInterface
         return false
     }
 
+    public remember(): void
+    {
+        if (this.session.cookie) {
+            this.session.cookie.maxAge = 5 * 365 * 24 * 60 * 60 * 1000
+        }
+    }
+
     public logout(): boolean
     {
-        delete this.session.user
+        delete this.session.resetMaxAge().user
         return !this.isLogged()
     }
 
-    public static open(session: Partial<SessionData>): AuthManager
+    public static open(session: Session & Partial<SessionData>): AuthManager
     {
         return new AuthManager(session)
     }

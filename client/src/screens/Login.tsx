@@ -1,11 +1,14 @@
-import { useState, useCallback, FormEvent } from "react"
+import { useState, useCallback, useReducer, FormEvent } from "react"
 import { Button, Col, Form, Row } from "react-bootstrap"
 import Page from "../components/Page"
 import Title from "../components/Title"
+import Csrf from "../components/Csrf"
 import GeneralError from "../components/GeneralError"
 import Api from "../helpers/Api"
 import PageHelper from "../helpers/PageHelper"
+import loginErrorsReducer, { LoginErrorsActionType } from "../reducers/loginErrorsReducer"
 import createErrorMessage from "../hooks/createErrorMessage"
+import hasErrors from "../hooks/hasErrors"
 import { LoginRequestData } from "../../../@types/request/LoginRequestData"
 import { LoginResponseData } from "../../../@types/response/LoginResponseData"
 import { Route } from "../data/enums/Route"
@@ -13,19 +16,23 @@ import { HttpType } from "../data/enums/HttpType"
 import { InputType } from "../data/enums/InputType"
 import { ButtonType } from "../data/enums/ButtonType"
 import EmptyDep from "../data/constans/EmptyDep"
+import { RequestErrors } from "../data/types/RequestErrors"
+import FormErrors from "../components/FormErrors"
 import "../assets/sass/Auth.sass"
 
 
 export enum LoginForm
 {
     USERNAME = "username",
-    PASSWORD = "password"
+    PASSWORD = "password",
+    REMEMBER = "remember"
 }
 
 export default function Login(): JSX.Element
 {
     const [ validated, setValidated ] = useState(false)
     const [ errorMessage, setErrorMessage ] = useState<JSX.Element | null>(null)
+    const [ errors, dispatchErrors ] = useReducer(loginErrorsReducer, {})
 
     const submitLogin = useCallback((event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -34,6 +41,7 @@ export default function Login(): JSX.Element
 
         Api.post<LoginRequestData, LoginResponseData>(Route.LOGIN)
             .on("response", handleResponse)
+            .on("validateError", handleValidateError)
             .on("error", handleError)
             .form(data)
             .send()
@@ -41,6 +49,10 @@ export default function Login(): JSX.Element
 
 
     const handleResponse = useCallback((response: LoginResponseData) => {
+        dispatchErrors({
+            type: LoginErrorsActionType.RESET
+        })
+
         if (response.success) {
             setValidated(true)
             PageHelper.goTo(Route.HOME)
@@ -50,7 +62,18 @@ export default function Login(): JSX.Element
         }
     }, EmptyDep)
 
+    const handleValidateError = useCallback((errors: RequestErrors<LoginRequestData>) => {
+        dispatchErrors({
+            type: LoginErrorsActionType.SET,
+            errors
+        })
+    }, EmptyDep)
+
     const handleError = useCallback((data: LoginResponseData | string) => {
+        dispatchErrors({
+            type: LoginErrorsActionType.RESET
+        })
+
         if (typeof data === "string") {
             setErrorMessage(<GeneralError />)
         }
@@ -63,11 +86,19 @@ export default function Login(): JSX.Element
     }, EmptyDep)
 
 
+    const clearErrors = useCallback((property: keyof LoginRequestData) => () => {
+        dispatchErrors({
+            type: LoginErrorsActionType.CLEAR,
+            property
+        })
+    }, EmptyDep)
+
     return <Page errorMessage={errorMessage}>
         <Title />
         <Row>
             <Col xxl={{ span: 6, offset: 3 }}>
                 <Form method={HttpType.POST} className="auth-container" validated={validated} onSubmit={submitLogin}>
+                    <Csrf />
                     <Row>
                         <Col xs={12} md={{ span: 10, offset: 1 }}>
                             <Form.Group className="auth-form">
@@ -82,7 +113,10 @@ export default function Login(): JSX.Element
                                 <Form.Control
                                     type={InputType.TEXT}
                                     name={LoginForm.USERNAME}
-                                    placeholder="User" />
+                                    isInvalid={hasErrors(errors.username)}
+                                    placeholder="User"
+                                    onInput={clearErrors(LoginForm.USERNAME)} />
+                                <FormErrors errors={errors.username} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -93,7 +127,25 @@ export default function Login(): JSX.Element
                                 <Form.Control
                                     type={InputType.PASSWORD}
                                     name={LoginForm.PASSWORD}
-                                    placeholder="Password" />
+                                    isInvalid={hasErrors(errors.password)}
+                                    placeholder="Password"
+                                    onInput={clearErrors(LoginForm.PASSWORD)} />
+                                <FormErrors errors={errors.password} />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xxl={{ span: 6, offset: 3 }}>
+                            <Form.Group className="auth-form" controlId={LoginForm.REMEMBER}>
+                                <Form.Check type={InputType.CHECKBOX} className="text-center">
+                                    <Form.Check.Input
+                                        name={LoginForm.REMEMBER}
+                                        className="auth-checkbox"
+                                        isInvalid={hasErrors(errors.remember)}
+                                        onClick={clearErrors(LoginForm.REMEMBER)} />
+                                    <Form.Check.Label>Zapamiętaj mnie</Form.Check.Label>
+                                    <FormErrors errors={errors.remember} />
+                                </Form.Check>
                             </Form.Group>
                         </Col>
                     </Row>
