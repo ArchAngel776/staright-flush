@@ -12,6 +12,6 @@ export default class RegisterErrorActionException extends Error
 
     public get message(): string
     {
-        return `Cannot recognize action type for register errors dispatch.`
+        return "Cannot recognize action type for register errors dispatch."
     }
 }

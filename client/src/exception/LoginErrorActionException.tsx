@@ -12,6 +12,6 @@ export default class LoginErrorActionException extends Error
 
     public get message(): string
     {
-        return `Cannot recognize action type for login errors dispatch.`
+        return "Cannot recognize action type for login errors dispatch."
     }
 }

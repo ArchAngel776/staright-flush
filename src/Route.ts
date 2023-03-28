@@ -35,4 +35,6 @@ app.get("/me", middleware(Auth), action(MeAction))
 
 app.get("/avatar/:avatar", action(AvatarAction))
 
+app.get("/game", action(SiteAction))
+
 export default app

@@ -3,8 +3,10 @@ import { Route } from "./data/enums/Route"
 import Home from "./screens/Home"
 import Login from "./screens/Login"
 import Register from "./screens/Register"
+import GameWorkspace from "./screens/GameWorkspace"
 import NotFound from "./screens/NotFound"
 import "./assets/sass/App.sass"
+
 
 export default function App(): JSX.Element
 {
@@ -20,6 +22,10 @@ export default function App(): JSX.Element
         {
             path: Route.REGISTER,
             element: <Register />
+        },
+        {
+            path: Route.GAME,
+            element: <GameWorkspace />
         },
         {
             path: Route.NOT_FOUND,
